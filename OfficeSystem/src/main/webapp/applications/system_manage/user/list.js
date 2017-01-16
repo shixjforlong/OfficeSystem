@@ -3,34 +3,33 @@ define(function(require){
 	require("cloud/base/fixTableHeader");
 	var layout = require("cloud/lib/plugin/jquery.layout");
 	var html = require("text!./list.html");
-	//var Service = require("../service");
 	var NoticeBar = require("./notice-bar");
 	var Table = require("cloud/components/table");
 	var Button = require("cloud/components/button");
 	var Paging = require("cloud/components/paging");
-	var AddArea = require("./addArea-window");
+	var Adduser = require("./userMan-window");
 	var columns = [ {
-		"title":locale.get({lang:"area_man_name"}),//区域名称
+		"title":"用户名",
 		"dataIndex" : "name",
 		"cls" : null,
 		"width" : "20%"
 	},{
-		"title":locale.get({lang:"area_man_charger"}),//负责人
-		"dataIndex" : "charger",
+		"title":"邮箱",
+		"dataIndex" : "email",
 		"cls" : null,
 		"width" : "20%"
 	},{
-		"title":locale.get({lang:"area_man_phone"}),//联系方式
-		"dataIndex" : "phone",
+		"title":"密码",
+		"dataIndex" : "password",
 		"cls" : null,
 		"width" : "25%"
 	},{
-		"title":locale.get({lang:"area_man_desc"}),//描述
-		"dataIndex" : "description",
+		"title":"手机号",
+		"dataIndex" : "phone",
 		"cls" : null,
 		"width" : "20%"
-	},{                                             //创建时间
-		"title":locale.get({lang:"create_time"}),
+	},{                                             
+		"title":"创建时间",
 		"dataIndex" : "createTime",
 		"cls" : null,
 		"width" : "20%",
@@ -49,33 +48,34 @@ define(function(require){
 			this.pageDisplay = 30;
 			this.elements = {
 				bar : {
-					id : "area_list_bar",
+					id : "user_list_bar",
 					"class" : null
 				},
 				table : {
-					id : "area_list_table",
+					id : "user_list_table",
 					"class" : null
 				},
 				paging : {
-					id : "area_list_paging",
+					id : "user_list_paging",
 					"class" : null
 				}
 			};
 		    this._render();
 		},
 		_render:function(){
-			$("#area_list").css("width",$(".wrap").width());
-			$("#area_list_paging").css("width",$(".wrap").width());
+			$("#user_list").css("width",$(".wrap").width());
+			$("#user_list_paging").css("width",$(".wrap").width());
 			
-			$("#area_list").css("height",$("#content-operation-menu").height() - $(".container-hd").height() - $(".main_hd").height());
+			$("#user_list").css("height",$("#content-operation-menu").height() - $(".container-hd").height() - $(".main_hd").height());
 			
-		    var listHeight = $("#area_list").height();
-	        var barHeight = $("#area_list_bar").height()*2;
+		    var listHeight = $("#user_list").height();
+	        var barHeight = $("#user_list_bar").height()*2;
 		    var tableHeight=listHeight - barHeight - 5;
-		    $("#area_list_table").css("height",tableHeight);
+		    $("#user_list_table").css("height",tableHeight);
 		    
+		    this._renderNoticeBar();
 			this._renderTable();
-			this._renderNoticeBar();
+			
 		},
 		stripscript:function(s){ 
 		    var pattern = new RegExp("[`~!@#$^&*()=|{}':;',\\[\\].<>/?~！@#￥……&*（）&;—|{}【】‘；：”“'。，、？]") 
@@ -87,7 +87,7 @@ define(function(require){
 		},
 		_renderTable : function() {
 			this.listTable = new Table({
-				selector : "#area_list_table",
+				selector : "#user_list_table",
 				columns : columns,
 				datas : [],
 				pageSize : 100,
@@ -105,61 +105,32 @@ define(function(require){
 	                    },
 	                   scope: this
 				}
-				 /*drawCallback: function ( oSettings ) {
-         			if ( oSettings.bSorted || oSettings.bFiltered )
-         			{
-         				for ( var i=0, iLen=oSettings.aiDisplay.length ; i<iLen ; i++ )
-         				{
-         					$('td:eq(0)', oSettings.aoData[ oSettings.aiDisplay[i] ].nTr ).html( i+1 );
-         				}
-         			}
-         		}*/
 			});
-		    var height = $("#area_list_table").height()+"px";
-	        $("#area_list_table-table").freezeHeader({ 'height': height });
+		    var height = $("#user_list_table").height()+"px";
+	        $("#user_list_table-table").freezeHeader({ 'height': height });
 			this.setDataTable();
 		},
 		setDataTable : function() {
 			//this.loadTableData(30,0);
 		},
 		loadTableData : function(limit,cursor) {
-			cloud.util.mask("#area_list_table");
+			cloud.util.mask("#user_list_table");
         	var self = this;
         	var name = $("#name").val();
         	if(name){
         		name = self.stripscript(name);
         	}
-			
-			var userId = cloud.storage.sessionStorage("accountInfo").split(",")[1].split(":")[1];
-			var roleType = permission.getInfo().roleType;
-			Service.getAreaByUserId(userId,function(areaData){
-            	
-            	if(roleType == 51){
-            		self.searchData = {
-            				"name":name
-            		};
-                }else{
-                	if(areaData && areaData.result){
-                		self.searchData = {
-                				"name":name,
-                				"areaId":areaData.result.area
-                		};
-                	}else{
-                		self.searchData = {
-                				"name":name,
-                				"areaId":"000000000000000000000000"
-                		};
-                	}
-                }
-            	Service.getAllArea(self.searchData,limit,cursor,function(data){
+        	self.searchData={
+        			name:name
+        	};
+            Service.getAllUser(self.searchData,limit,cursor,function(data){
 	   				 var total = data.result.length;
 	   				 self.pageRecordTotal = total;
 	   	        	 self.totalCount = data.result.length;
 	           		 self.listTable.render(data.result);
 	   	        	 self._renderpage(data, 1);
-	   	        	 cloud.util.unmask("#area_list_table");
-   			    }, self);
-            });
+	   	        	 cloud.util.unmask("#user_list_table");
+   			}, self);
 			
 		},
 		 _renderpage:function(data, start){
@@ -168,17 +139,17 @@ define(function(require){
 				 self.page.reset(data);
 			 }else{
 				 self.page = new Paging({
-        			selector : $("#area_list_paging"),
+        			selector : $("#user_list_paging"),
         			data:data,
     				current:1,
     				total:data.total,
     				limit:this.pageDisplay,
         			requestData:function(options,callback){
-        				cloud.util.mask("#area_list_table");
-        				Service.getAllArea(self.searchData, options.limit,options.cursor,function(data){
+        				cloud.util.mask("#user_list_table");
+        				Service.getAllUser(self.searchData, options.limit,options.cursor,function(data){
         				   self.pageRecordTotal = data.total - data.cursor;
 						   callback(data);
-						   cloud.util.unmask("#area_list_table");
+						   cloud.util.unmask("#user_list_table");
         				});
         			},
         			turn:function(data, nowPage){
@@ -199,7 +170,7 @@ define(function(require){
         _renderNoticeBar:function(){
 			var self = this;
 			this.noticeBar = new NoticeBar({
-				selector : "#area_list_bar",
+				selector : "#user_list_bar",
 				events : {
 					  query: function(){
 						  self.loadTableData($(".paging-limit-select").val(),0);
@@ -208,10 +179,10 @@ define(function(require){
 						  if (this.addPro) {
 	                            this.addPro.destroy();
 	                        }
-	                        this.addPro = new AddArea({
+	                        this.addPro = new Adduser({
 	                            selector: "body",
 	                            events: {
-	                                "getAreaList": function() {
+	                                "getUserList": function() {
 	                                	self.loadTableData($(".paging-limit-select").val(),0);
 	                                }
 	                            }
@@ -228,11 +199,11 @@ define(function(require){
 	                        	if (this.modifyPro) {
 	                                this.modifyPro.destroy();
 	                            }
-	                            this.modifyPro = new AddArea({
+	                            this.modifyPro = new Adduser({
 	                                selector: "body",
 	                                id: _id,
 	                                events: {
-	                                    "getAreaList": function() {
+	                                    "getUserList": function() {
 	                                    	self.loadTableData($(".paging-limit-select").val(),0);
 	                                    }
 	                                }
@@ -240,14 +211,14 @@ define(function(require){
 	                        }
 					  },
 					  drop:function(){
-						  cloud.util.mask("#area_list_table");
+						  cloud.util.mask("#user_list_table");
 	                        var idsArr = self.getSelectedResources();
 	                        if (idsArr.length == 0) {
-	                            cloud.util.unmask("#area_list_table");
+	                            cloud.util.unmask("#user_list_table");
 	                            dialog.render({lang: "please_select_at_least_one_config_item"});
 	                            return;
 	                        } else {
-	                        	cloud.util.unmask("#area_list_table");
+	                        	cloud.util.unmask("#user_list_table");
 	                            var ids = "";
 	                            for (var i = 0; i < idsArr.length; i++) {
 	                                if (i == idsArr.length - 1) {
@@ -262,10 +233,10 @@ define(function(require){
 	                                        lang: "affirm",
 	                                        click: function() {
 	                                            self.listTable.mask();
-	                                            Service.deleteAreaByIds(ids, function(data) {
+	                                            Service.deleteUserById(ids, function(data) {
 	                                            	if(data.result){
 	                                            		if(data.result.error_code && data.result.error_code=="70014"){
-	                                            			dialog.render({lang: "this_area_has_line"});
+	                                            			dialog.render({lang: "this_user_has_line"});
 	                                                        self.loadTableData($(".paging-limit-select  option:selected").val(), cursor, "");
 	                                                    }
 	                                            	  }else{

@@ -109,7 +109,7 @@ a:hover{text-decoration:underline;}
 
 
 /* 鍐呭 */
-.wrap{width:98%;margin:0 auto;}
+.wrap{width:100%;margin:0 auto;}
 .container{margin:8px auto 30px;border:1px solid #d9dadc;background:#fff;overflow:hidden;}
 .container-hd{padding:0 20px;line-height:30px;height:30px;background: #97999C;font-size: 12px;color: white;}
 .container-bd{padding:0px;height: auto;min-height:400px;_height:400px;}

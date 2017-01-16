@@ -5,7 +5,6 @@ define(function(require){
 	require("cloud/lib/plugin/jquery.datetimepicker");
 	require("cloud/resources/css/jquery.multiselect.css");
 	var Button = require("cloud/components/button");
-	//var Service = require("../service");
     var NoticeBar = Class.create(cloud.Component, {
         initialize: function($super, options){
             $super(options);
@@ -18,8 +17,8 @@ define(function(require){
     	draw:function(){
     		  var self = this;
               var $htmls = $(+"<div></div>" +
-              "<div id='search-bar' style='width:auto;margin-top:5px;margin-left:5px;'>" +
-              "<label style='margin:auto 10px auto 10px ;margin-right: 6px;'>"+locale.get({lang:"area_man_name"})+" </label>" +
+              "<div id='search-bar' style='width:auto;margin-top:10px;margin-left:5px;'>" +
+              "<label style='margin:auto 10px auto 10px ;margin-right: 6px;'>用户名</label>" +
               "<input style='width:200px;' type='text'  id='name' />"  +
               "</div>");
               this.element.append($htmls);
@@ -28,7 +27,7 @@ define(function(require){
             var self = this;
             //查询
             var queryBtn = new Button({
-                text: locale.get({lang:"query"}),
+                text: "查询",
                 container: $("#search-bar"),
                 events: {
                     click: function(){
@@ -41,7 +40,7 @@ define(function(require){
             
           
             var addBtn = new Button({
-                text: locale.get({lang:"add"}),
+                text: "添加",
                 container: $("#search-bar"),
                 events: {
                     click: function(){
@@ -50,7 +49,7 @@ define(function(require){
                 }
             });
             var editBtn = new Button({
-                text: locale.get({lang:"modify"}),
+                text: "修改",
                 container: $("#search-bar"),
                 events: {
                     click: function(){
@@ -59,7 +58,7 @@ define(function(require){
                 }
             });
             var deleteBtn = new Button({
-                text: locale.get({lang:"delete"}),
+                text: "删除",
                 container: $("#search-bar"),
                 events: {
                     click: function(){
@@ -67,20 +66,7 @@ define(function(require){
                     }
                 }
             });
-            if(permission.app("area_manage").read){
-            	if(queryBtn) queryBtn.show();
-            }else{
-            	if(queryBtn) queryBtn.hide();
-            }
-            if(permission.app("area_manage").write){
-            	if(addBtn) addBtn.show();
-            	if(editBtn) editBtn.show();
-            	if(deleteBtn) deleteBtn.show();
-            }else{
-            	if(addBtn) addBtn.hide();
-            	if(editBtn) editBtn.hide();
-            	if(deleteBtn) deleteBtn.hide();
-            }
+            
             $("#search-bar a").css({
                 margin: "-3px 0px 0px 6px"
             });

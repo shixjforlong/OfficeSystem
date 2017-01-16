@@ -1,11 +1,12 @@
 define(function(require) {
 	return {
-		point : {
-			point_manage : [ 1200 ]
+		home:{
+			home_manage : [ 1100 ]
 		},
-		smartVm : {
-			smartVm_manage : [ 1300 ]
+		system: {
+			user_manage : [ 1200 ]
 		},
+		
 
 	};
 });

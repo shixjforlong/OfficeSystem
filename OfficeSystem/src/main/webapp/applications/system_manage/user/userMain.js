@@ -1,9 +1,9 @@
 define(function(require) {
     require("cloud/base/cloud");
     require("cloud/lib/plugin/jquery.dataTables");
-    var Table = require("../template/tableTemplate");
-    var html = require("text!./areaMain.html");
-    var statusMg = require("../template/menu");
+    var Table = require("../../template/tableTemplate");
+    var html = require("text!./userMain.html");
+    var statusMg = require("../../template/menu");
     var area_Mg = require("./list");
     var operationMenu = Class.create(cloud.Component, {
         initialize: function($super, options) {
@@ -19,11 +19,12 @@ define(function(require) {
         },
         _render: function() {
         	$("#content-operation-menu").height($("#user-content").height()-18);
+        	$("#content-operation-menu").css("margin-top","-7px");
             this.renderContent();
             
         },
         renderContent: function() {
-          var areaMan_Array = ["automat_area_manage"];
+          var areaMan_Array = ["system_user_manage"];
           if (this.statusMg) {
              this.statusMg.destroy();
           }
@@ -34,7 +35,7 @@ define(function(require) {
                    click: function(id) {
                         $(".main_bd").empty();
                         $("#user-content").scrollTop(0);
-                        if (id == "automat_area_manage") {//区域列表
+                        if (id == "system_user_manage") {//区域列表
                              if (this.area_listPage) {
                                 this.area_listPage.destroy();
                              }
@@ -45,7 +46,7 @@ define(function(require) {
                     }
                }
             });
-            $("#automat_area_manage").click();
+            $("#system_user_manage").click();
         }
     });
     return operationMenu;
