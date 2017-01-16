@@ -6,7 +6,7 @@ define(function(require) {
        
         deleteUserById: function(id, callback, context) {
             cloud.Ajax.request({
-                url: "api/user/" + id,
+                url: "sapi/user/" + id,
                 type: "DELETE",
                 success: function(data) {
                     callback.call(context || this, data);
@@ -18,7 +18,7 @@ define(function(require) {
             searchData.limit = limit;
             searchData.cursor = cursor;
             cloud.Ajax.request({
-                url: "api/user/list",
+                url: "sapi/user/list",
                 type: "GET",
                 parameters: searchData,
                 success: function(data) {
@@ -28,7 +28,7 @@ define(function(require) {
         },
         addUser:function(data,callback,context){
         	cloud.Ajax.request({
-				url:"api/user/add",
+				url:"sapi/user/add",
 				type : "post",
 				data:data,
 				success: function(data) {
@@ -42,7 +42,7 @@ define(function(require) {
         getUserInfoById: function(id, callback, context) {
             
             cloud.Ajax.request({
-                url: "api/user/"+id,
+                url: "sapi/user/"+id,
                 type: "GET",
                 success: function(data) {
                     callback.call(context || self, data);
@@ -52,7 +52,7 @@ define(function(require) {
         updateUser: function(contentData, id, callback, context) {
             var self = this;
             cloud.Ajax.request({
-                url: "api/user/" + id,
+                url: "sapi/user/" + id,
                 type: "PUT",
                 data: contentData,
                 success: function(data) {
