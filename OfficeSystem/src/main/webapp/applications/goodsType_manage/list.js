@@ -6,23 +6,18 @@ define(function(require){
 	var Table = require("cloud/components/table");
 	var Button = require("cloud/components/button");
 	var Paging = require("cloud/components/paging");
-	var Adduser = require("./userMan-window");
+	var AddgoodsType = require("./goodsTypeMan-window");
 	var Service = require("./service");
 	var columns = [ {
-		"title":"用户名",
+		"title":"商品分类名称",
 		"dataIndex" : "name",
 		"cls" : null,
-		"width" : "20%"
+		"width" : "30%"
 	},{
-		"title":"邮箱",
-		"dataIndex" : "email",
+		"title":"描述",
+		"dataIndex" : "desc",
 		"cls" : null,
-		"width" : "20%"
-	},{
-		"title":"手机号",
-		"dataIndex" : "phone",
-		"cls" : null,
-		"width" : "20%"
+		"width" : "30%"
 	},{                                             
 		"title":"创建时间",
 		"dataIndex" : "createTime",
@@ -54,30 +49,30 @@ define(function(require){
 			this.pageDisplay = 30;
 			this.elements = {
 				bar : {
-					id : "user_list_bar",
+					id : "goodsType_list_bar",
 					"class" : null
 				},
 				table : {
-					id : "user_list_table",
+					id : "goodsType_list_table",
 					"class" : null
 				},
 				paging : {
-					id : "user_list_paging",
+					id : "goodsType_list_paging",
 					"class" : null
 				}
 			};
 		    this._render();
 		},
 		_render:function(){
-			$("#user_list").css("width",$(".wrap").width());
-			$("#user_list_paging").css("width",$(".wrap").width());
+			$("#goodsType_list").css("width",$(".wrap").width());
+			$("#goodsType_list_paging").css("width",$(".wrap").width());
 			
-			$("#user_list").css("height",$("#content-operation-menu").height() - $(".container-hd").height() - $(".main_hd").height());
+			$("#goodsType_list").css("height",$("#content-operation-menu").height() - $(".container-hd").height() - $(".main_hd").height());
 			
-		    var listHeight = $("#user_list").height();
-	        var barHeight = $("#user_list_bar").height()*2;
+		    var listHeight = $("#goodsType_list").height();
+	        var barHeight = $("#goodsType_list_bar").height()*2;
 		    var tableHeight=listHeight - barHeight - 5;
-		    $("#user_list_table").css("height",tableHeight);
+		    $("#goodsType_list_table").css("height",tableHeight);
 		    
 		    this._renderNoticeBar();
 			this._renderTable();
@@ -93,7 +88,7 @@ define(function(require){
 		},
 		_renderTable : function() {
 			this.listTable = new Table({
-				selector : "#user_list_table",
+				selector : "#goodsType_list_table",
 				columns : columns,
 				datas : [],
 				pageSize : 100,
@@ -112,15 +107,15 @@ define(function(require){
 	                   scope: this
 				}
 			});
-		    var height = $("#user_list_table").height()+"px";
-	        $("#user_list_table-table").freezeHeader({ 'height': height });
+		    var height = $("#goodsType_list_table").height()+"px";
+	        $("#goodsType_list_table-table").freezeHeader({ 'height': height });
 			this.setDataTable();
 		},
 		setDataTable : function() {
-			this.loadTableData(30,0);
+			//this.loadTableData(30,0);
 		},
 		loadTableData : function(limit,cursor) {
-			cloud.util.mask("#user_list_table");
+			cloud.util.mask("#goodsType_list_table");
         	var self = this;
         	var name = $("#name").val();
         	if(name){
@@ -129,13 +124,13 @@ define(function(require){
         	self.searchData={
         			name:name
         	};
-            Service.getAllUser(self.searchData,limit,cursor,function(data){
+            Service.getAllGoodsType(self.searchData,limit,cursor,function(data){
 	   				 var total = data.result.length;
 	   				 self.pageRecordTotal = total;
 	   	        	 self.totalCount = data.result.length;
 	           		 self.listTable.render(data.result);
 	   	        	 self._renderpage(data, 1);
-	   	        	 cloud.util.unmask("#user_list_table");
+	   	        	 cloud.util.unmask("#goodsType_list_table");
    			}, self);
 			
 		},
@@ -145,17 +140,17 @@ define(function(require){
 				 self.page.reset(data);
 			 }else{
 				 self.page = new Paging({
-        			selector : $("#user_list_paging"),
+        			selector : $("#goodsType_list_paging"),
         			data:data,
     				current:1,
     				total:data.total,
     				limit:this.pageDisplay,
         			requestData:function(options,callback){
-        				cloud.util.mask("#user_list_table");
-        				Service.getAllUser(self.searchData, options.limit,options.cursor,function(data){
+        				cloud.util.mask("#goodsType_list_table");
+        				Service.getAllGoodsType(self.searchData, options.limit,options.cursor,function(data){
         				   self.pageRecordTotal = data.total - data.cursor;
 						   callback(data);
-						   cloud.util.unmask("#user_list_table");
+						   cloud.util.unmask("#goodsType_list_table");
         				});
         			},
         			turn:function(data, nowPage){
@@ -176,7 +171,7 @@ define(function(require){
         _renderNoticeBar:function(){
 			var self = this;
 			this.noticeBar = new NoticeBar({
-				selector : "#user_list_bar",
+				selector : "#goodsType_list_bar",
 				events : {
 					  query: function(){
 						  self.loadTableData($(".paging-limit-select").val(),0);
@@ -185,10 +180,10 @@ define(function(require){
 						  if (this.addPro) {
 	                            this.addPro.destroy();
 	                        }
-	                        this.addPro = new Adduser({
+	                        this.addPro = new AddgoodsType({
 	                            selector: "body",
 	                            events: {
-	                                "getUserList": function() {
+	                                "getGoodsTypeList": function() {
 	                                	self.loadTableData($(".paging-limit-select").val(),0);
 	                                }
 	                            }
@@ -205,11 +200,11 @@ define(function(require){
 	                        	if (this.modifyPro) {
 	                                this.modifyPro.destroy();
 	                            }
-	                            this.modifyPro = new Adduser({
+	                            this.modifyPro = new AddgoodsType({
 	                                selector: "body",
 	                                id: _id,
 	                                events: {
-	                                    "getUserList": function() {
+	                                    "getGoodsTypeList": function() {
 	                                    	self.loadTableData($(".paging-limit-select").val(),0);
 	                                    }
 	                                }
@@ -217,14 +212,14 @@ define(function(require){
 	                        }
 					  },
 					  drop:function(){
-						  cloud.util.mask("#user_list_table");
+						  cloud.util.mask("#goodsType_list_table");
 	                        var idsArr = self.getSelectedResources();
 	                        if (idsArr.length == 0) {
-	                            cloud.util.unmask("#user_list_table");
+	                            cloud.util.unmask("#goodsType_list_table");
 	                            dialog.render({lang: "please_select_at_least_one_config_item"});
 	                            return;
 	                        } else {
-	                        	cloud.util.unmask("#user_list_table");
+	                        	cloud.util.unmask("#goodsType_list_table");
 	                            var ids = "";
 	                            for (var i = 0; i < idsArr.length; i++) {
 	                                if (i == idsArr.length - 1) {
@@ -242,7 +237,7 @@ define(function(require){
 	                                            if(ids.length>0){
 	                                            	for(var i=0;i<ids.length;i++){
 	                                            		var id = ids[i];
-	                                            		 Service.deleteUserById(id, function(data) {
+	                                            		 Service.deleteGoodsTypeById(id, function(data) {
 	 	                                            		if(data.result == "success"){
 	 	                                            			  if (self.pageRecordTotal == 1) {
 	 	                                                              var cursor = ($(".paging-page-current").val() - 2) * $(".paging-limit-select").val();

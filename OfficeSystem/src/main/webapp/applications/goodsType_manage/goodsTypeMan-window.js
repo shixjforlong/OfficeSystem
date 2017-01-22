@@ -12,11 +12,9 @@ define(function(require){
 			locale.render({element:this.element});
 		},
 		_renderWindow:function(){
-			var bo = $("body");
-			var self = this;
 			this.window = new _Window({
 				container: "body",
-				title: "用户管理",
+				title: "商品分类管理",
 				top: "center",
 				left: "center",
 				height:252,
@@ -41,20 +39,12 @@ define(function(require){
 		
 			var htmls1= "<table width='90%' style='margin-left:80px;margin-top:10px;height: 150px;' border='0'>"
 					    +"<tr style='height:30px;'>"
-						+ "<td width='25%' height='20px' style='font-size: 12px;'><label style='color:red;'>*</label> <label>用户名</label></td>"
-						+ "<td  height='20px'><input style='border-radius: 0px;width: 270px;height: 22px; margin-left: 0px;' type='text' id='username' name='username' /></td>"
+						+ "<td width='25%' height='20px' style='font-size: 12px;'><label style='color:red;'>*</label> <label>商品分类名称</label></td>"
+						+ "<td  height='20px'><input style='border-radius: 0px;width: 270px;height: 22px; margin-left: 0px;' type='text' id='typeName' name='typeName' /></td>"
 						+"</tr>"
 						+"<tr style='height:30px;'>"
-					    + "<td width='25%' height='20px' style='font-size: 12px;'><label style='color:red;'>*</label> <label>密码</label></td>"
-						+ "<td  height='20px'><input style='border-radius: 0px;width: 270px;height: 22px; margin-left: 0px;' type='password' id='password' name='password'/></td>"
-						+"</tr>"
-						+"<tr style='height:30px;'>"
-						+ "<td width='25%' height='20px' style='font-size: 12px;'><label style='color:red;'>&nbsp;</label> <label>邮箱</label></td>"
-						+ "<td  height='20px'><input style='border-radius: 0px;width: 270px;height: 22px; margin-left: 0px;' type='text' id='email' name='email' /></td>"
-						+"</tr>"
-						+"<tr style='height:30px;'>"
-					    + "<td width='25%' height='20px' style='font-size: 12px;'><label style='color:red;'>&nbsp;</label> <label>手机号</label></td>"
-						+ "<td  height='20px'><input style='border-radius: 0px;width: 270px;height: 22px; margin-left: 0px;' type='text' id='phone' name='phone'/></td>"
+					    + "<td width='25%' height='20px' style='font-size: 12px;'><label style='color:red;'>&nbsp;</label> <label>描述</label></td>"
+						+ "<td  height='20px'><input style='border-radius: 0px;width: 270px;height: 22px; margin-left: 0px;' type='text' id='desc' name='desc'/></td>"
 						+"</tr>"
 					    + " </table>"
 					    + "<div style='text-align: right;width: 94%;margin-top: 10px;border-top: 1px solid #f2f2f2;'><a id='product-config-save' class='btn btn-primary submit' style='margin-top: 8px;'>保存</a><a id='product-config-cancel' style='margin-left: 10px;margin-top: 8px;' class='btn btn-primary submit'>取消</a></div>";
@@ -69,41 +59,32 @@ define(function(require){
 		    });
             //保存
 		    $("#product-config-save").bind("click",function(){
-	        	   var name = $("#username").val();
-	     		   var email = $("#email").val();
-	     		   var password = $("#password").val();
-	     		   var phone=$("#phone").val();
+	        	   var name = $("#typeName").val();
+	     		   var desc = $("#desc").val();
 	     		   if(name==null||name.replace(/(^\s*)|(\s*$)/g,"")==""){
-          			   dialog.render({text:"用户名不能为空"});
+          			   dialog.render({text:"用商品分类名称不能为空"});
           			   return;
           		   };
-        		   if(password==null||password.replace(/(^\s*)|(\s*$)/g,"")==""){
-        			   dialog.render({text:"密码不能为空"});
-        			   return;
-        		   };
-        		   
           		   
 	     		   var finaldata={
 	 	             		name:name,
-	 	             		email:email,
-	 	             		password:password,
-	 	             		phone:phone
+	 	             		desc:desc
 	 	           };
 	     		   if(self._id){
-	     			  Service.updateUser(self._id,finaldata,function(data){
+	     			  Service.updateGoodsType(self._id,finaldata,function(data){
                     	   if(data.error!=null){
     	                	  
     	                	}else{
     							self.window.destroy();
-    		 	             	self.fire("getUserList");
+    		 	             	self.fire("getGoodsTypeList");
     						}
     			       });
 	     		   }else{
-	     			  Service.addUser(finaldata,function(data){
+	     			  Service.addGoodsType(finaldata,function(data){
 	 	                	if(data.error!=null){
 	 	                	}else{
 								self.window.destroy();
-			 	             	self.fire("getUserList");
+			 	             	self.fire("getGoodsTypeList");
 							}
 	 				   });
 	     		   }
@@ -111,11 +92,9 @@ define(function(require){
 		},
 		_renderGetData:function(){
 			if(this._id){
-				Service.getUserInfoById(this._id,function(data){
-		     		 $("#username").val(data.result.name==null?"":data.result.name);
-		     		 $("#email").val(data.result.email==null?"":data.result.email);
-		  		     $("#password").val(data.result.password==null?"":data.result.password);
-		  		     $("#phone").val(data.result.phone==null?"":data.result.phone);	
+				Service.getGoodsTypeInfoById(this._id,function(data){
+		     		 $("#typeName").val(data.result.name==null?"":data.result.name);
+		     		 $("#desc").val(data.result.desc==null?"":data.result.desc);
 				});
 			}
 		},

@@ -4,28 +4,28 @@ define(function(require) {
         initialize: function(){
         },
        
-        deleteUserById: function(id, callback, context) {
+        deletegoodsById: function(id, callback, context) {
         	$.ajax({
-                url: "http://localhost/sapi/user/" + id,
+                url: "http://localhost/sapi/goods/" + id,
                 type: "DELETE",
                 success: function(data) {
                     callback.call(context || this, data);
                 }
             });
         },
-        getAllUser: function(searchData, limit, cursor, callback, context) {
+        getAllgoods: function(searchData, limit, cursor, callback, context) {
             var self = this;
             $.ajax({
-                url: "http://localhost/sapi/user/list?limit="+limit+"&cursor="+cursor,
+                url: "http://localhost/sapi/goods/list?limit="+limit+"&cursor="+cursor,
                 type: "GET",
                 success: function(data) {
                     callback.call(context || self, data);
                 }
             });
         },
-        addUser:function(data,callback,context){
+        addgoods:function(data,callback,context){
         	$.ajax({
-				url:"http://localhost/sapi/user/add",
+				url:"http://localhost/sapi/goods/add",
 				type : "post",
 				"contentType": "application/json", 
 				data:JSON.stringify(data),
@@ -37,20 +37,20 @@ define(function(require) {
 	            }
 			});
         },
-        getUserInfoById: function(id, callback, context) {
+        getgoodsInfoById: function(id, callback, context) {
             
         	$.ajax({
-                url: "http://localhost/sapi/user/"+id,
+                url: "http://localhost/sapi/goods/"+id,
                 type: "GET",
                 success: function(data) {
                     callback.call(context || self, data);
                 }
             });
         },
-        updateUser: function(id,contentData, callback, context) {
+        updategoods: function(id,contentData, callback, context) {
             var self = this;
             $.ajax({
-                url: "http://localhost/sapi/user/"+ id,
+                url: "http://localhost/sapi/goods/"+ id,
                 type: "PUT",
                 "contentType": "application/json", 
 				data:JSON.stringify(contentData),

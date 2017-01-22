@@ -32,10 +32,34 @@ define(function(require) {
 			}]
 		}]
 	};
-	
+	var goods= {
+			name : "goods",
+			order :1,
+			id:"sg-goods",
+			subNavs:[{
+				name:"goods_manage",
+				order : 0,
+				defaultOpen : false,
+				defaultShow : true,
+				subModule:[
+				{                       
+					name : "goodsType_manage", //商品分类管理
+					defaultShow : true,
+					order : 0,
+					operation:["r","w"],
+					url : "./goodsType_manage/goodsTypeMain.js"
+				},{                       
+					name : "good_manage", //商品信息管理
+					defaultShow : true,
+					order : 0,
+					operation:["r","w"],
+					url : "./goods_manage/goodsMain.js"
+				}]
+			}]
+		};
 	
 	var appConfig = {
-		modules : [ home,system]
+		modules : [ home,system,goods]
 	}
 
 	return appConfig;

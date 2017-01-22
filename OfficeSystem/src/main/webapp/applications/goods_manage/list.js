@@ -6,28 +6,53 @@ define(function(require){
 	var Table = require("cloud/components/table");
 	var Button = require("cloud/components/button");
 	var Paging = require("cloud/components/paging");
-	var Adduser = require("./userMan-window");
+	var Addgoods = require("./goodsMan-window");
 	var Service = require("./service");
 	var columns = [ {
-		"title":"用户名",
+		"title":"商品名称",
 		"dataIndex" : "name",
 		"cls" : null,
-		"width" : "20%"
+		"width" : "10%"
 	},{
-		"title":"邮箱",
-		"dataIndex" : "email",
+		"title":"图片",
+		"dataIndex" : "imagepath",
 		"cls" : null,
-		"width" : "20%"
+		"width" : "10%"
 	},{
-		"title":"手机号",
-		"dataIndex" : "phone",
+		"title":"商品分类",
+		"dataIndex" : "type",
 		"cls" : null,
-		"width" : "20%"
+		"width" : "10%"
+	},{
+		"title":"规格",
+		"dataIndex" : "specifications",
+		"cls" : null,
+		"width" : "10%"
+	},{
+		"title":"价格",
+		"dataIndex" : "price",
+		"cls" : null,
+		"width" : "10%"
+	},{
+		"title":"餐盒信息",
+		"dataIndex" : "specifications",
+		"cls" : null,
+		"width" : "10%"
+	},{
+		"title":"售卖状态",
+		"dataIndex" : "state",
+		"cls" : null,
+		"width" : "10%"
+	},{
+		"title":"商品描述",
+		"dataIndex" : "descript",
+		"cls" : null,
+		"width" : "10%"
 	},{                                             
 		"title":"创建时间",
 		"dataIndex" : "createTime",
 		"cls" : null,
-		"width" : "20%",
+		"width" : "10%",
 		render:function(data, type, row){
 			if(data){
 				return cloud.util.dateFormat(new Date(data), "yyyy-MM-dd hh:mm:ss");
@@ -38,12 +63,11 @@ define(function(require){
 		"title":"修改时间",
 		"dataIndex" : "updateTime",
 		"cls" : null,
-		"width" : "20%",
+		"width" : "10%",
 		render:function(data, type, row){
 			if(data){
 				return cloud.util.dateFormat(new Date(data), "yyyy-MM-dd hh:mm:ss");
 			}
-			
 		}
 	}];
 	var list = Class.create(cloud.Component,{
@@ -54,30 +78,30 @@ define(function(require){
 			this.pageDisplay = 30;
 			this.elements = {
 				bar : {
-					id : "user_list_bar",
+					id : "goods_list_bar",
 					"class" : null
 				},
 				table : {
-					id : "user_list_table",
+					id : "goods_list_table",
 					"class" : null
 				},
 				paging : {
-					id : "user_list_paging",
+					id : "goods_list_paging",
 					"class" : null
 				}
 			};
 		    this._render();
 		},
 		_render:function(){
-			$("#user_list").css("width",$(".wrap").width());
-			$("#user_list_paging").css("width",$(".wrap").width());
+			$("#goods_list").css("width",$(".wrap").width());
+			$("#goods_list_paging").css("width",$(".wrap").width());
 			
-			$("#user_list").css("height",$("#content-operation-menu").height() - $(".container-hd").height() - $(".main_hd").height());
+			$("#goods_list").css("height",$("#content-operation-menu").height() - $(".container-hd").height() - $(".main_hd").height());
 			
-		    var listHeight = $("#user_list").height();
-	        var barHeight = $("#user_list_bar").height()*2;
+		    var listHeight = $("#goods_list").height();
+	        var barHeight = $("#goods_list_bar").height()*2;
 		    var tableHeight=listHeight - barHeight - 5;
-		    $("#user_list_table").css("height",tableHeight);
+		    $("#goods_list_table").css("height",tableHeight);
 		    
 		    this._renderNoticeBar();
 			this._renderTable();
@@ -93,7 +117,7 @@ define(function(require){
 		},
 		_renderTable : function() {
 			this.listTable = new Table({
-				selector : "#user_list_table",
+				selector : "#goods_list_table",
 				columns : columns,
 				datas : [],
 				pageSize : 100,
@@ -112,15 +136,15 @@ define(function(require){
 	                   scope: this
 				}
 			});
-		    var height = $("#user_list_table").height()+"px";
-	        $("#user_list_table-table").freezeHeader({ 'height': height });
+		    var height = $("#goods_list_table").height()+"px";
+	        $("#goods_list_table-table").freezeHeader({ 'height': height });
 			this.setDataTable();
 		},
 		setDataTable : function() {
-			this.loadTableData(30,0);
+			//this.loadTableData(30,0);
 		},
 		loadTableData : function(limit,cursor) {
-			cloud.util.mask("#user_list_table");
+			cloud.util.mask("#goods_list_table");
         	var self = this;
         	var name = $("#name").val();
         	if(name){
@@ -129,13 +153,13 @@ define(function(require){
         	self.searchData={
         			name:name
         	};
-            Service.getAllUser(self.searchData,limit,cursor,function(data){
+            Service.getAllgoods(self.searchData,limit,cursor,function(data){
 	   				 var total = data.result.length;
 	   				 self.pageRecordTotal = total;
 	   	        	 self.totalCount = data.result.length;
 	           		 self.listTable.render(data.result);
 	   	        	 self._renderpage(data, 1);
-	   	        	 cloud.util.unmask("#user_list_table");
+	   	        	 cloud.util.unmask("#goods_list_table");
    			}, self);
 			
 		},
@@ -145,17 +169,17 @@ define(function(require){
 				 self.page.reset(data);
 			 }else{
 				 self.page = new Paging({
-        			selector : $("#user_list_paging"),
+        			selector : $("#goods_list_paging"),
         			data:data,
     				current:1,
     				total:data.total,
     				limit:this.pageDisplay,
         			requestData:function(options,callback){
-        				cloud.util.mask("#user_list_table");
-        				Service.getAllUser(self.searchData, options.limit,options.cursor,function(data){
+        				cloud.util.mask("#goods_list_table");
+        				Service.getAllgoods(self.searchData, options.limit,options.cursor,function(data){
         				   self.pageRecordTotal = data.total - data.cursor;
 						   callback(data);
-						   cloud.util.unmask("#user_list_table");
+						   cloud.util.unmask("#goods_list_table");
         				});
         			},
         			turn:function(data, nowPage){
@@ -176,7 +200,7 @@ define(function(require){
         _renderNoticeBar:function(){
 			var self = this;
 			this.noticeBar = new NoticeBar({
-				selector : "#user_list_bar",
+				selector : "#goods_list_bar",
 				events : {
 					  query: function(){
 						  self.loadTableData($(".paging-limit-select").val(),0);
@@ -185,10 +209,10 @@ define(function(require){
 						  if (this.addPro) {
 	                            this.addPro.destroy();
 	                        }
-	                        this.addPro = new Adduser({
+	                        this.addPro = new Addgoods({
 	                            selector: "body",
 	                            events: {
-	                                "getUserList": function() {
+	                                "getgoodsList": function() {
 	                                	self.loadTableData($(".paging-limit-select").val(),0);
 	                                }
 	                            }
@@ -205,11 +229,11 @@ define(function(require){
 	                        	if (this.modifyPro) {
 	                                this.modifyPro.destroy();
 	                            }
-	                            this.modifyPro = new Adduser({
+	                            this.modifyPro = new Addgoods({
 	                                selector: "body",
 	                                id: _id,
 	                                events: {
-	                                    "getUserList": function() {
+	                                    "getgoodsList": function() {
 	                                    	self.loadTableData($(".paging-limit-select").val(),0);
 	                                    }
 	                                }
@@ -217,14 +241,14 @@ define(function(require){
 	                        }
 					  },
 					  drop:function(){
-						  cloud.util.mask("#user_list_table");
+						  cloud.util.mask("#goods_list_table");
 	                        var idsArr = self.getSelectedResources();
 	                        if (idsArr.length == 0) {
-	                            cloud.util.unmask("#user_list_table");
+	                            cloud.util.unmask("#goods_list_table");
 	                            dialog.render({lang: "please_select_at_least_one_config_item"});
 	                            return;
 	                        } else {
-	                        	cloud.util.unmask("#user_list_table");
+	                        	cloud.util.unmask("#goods_list_table");
 	                            var ids = "";
 	                            for (var i = 0; i < idsArr.length; i++) {
 	                                if (i == idsArr.length - 1) {
@@ -242,7 +266,7 @@ define(function(require){
 	                                            if(ids.length>0){
 	                                            	for(var i=0;i<ids.length;i++){
 	                                            		var id = ids[i];
-	                                            		 Service.deleteUserById(id, function(data) {
+	                                            		 Service.deletegoodsById(id, function(data) {
 	 	                                            		if(data.result == "success"){
 	 	                                            			  if (self.pageRecordTotal == 1) {
 	 	                                                              var cursor = ($(".paging-page-current").val() - 2) * $(".paging-limit-select").val();
