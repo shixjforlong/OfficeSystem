@@ -1,0 +1,165 @@
+<style>
+    #deviceForm {border:1px solid #CFD8CE;font-size:12px;height:550px;margin: 5px auto;width:850px;overflow:hidden;position:relative;-moz-border-radius:5px;-webkit-border-radius:5px;}
+    #deviceForm .items{width:100%; clear:both; position:absolute;}
+    #deviceForm .right{float:right;}
+    #deviceForm #status{height:35px;background:#28b5d6;}
+    #status li{float:left;color:#fff;padding:6.5px 70px;font-size: 14px;}
+    #status li.active{background-color:#09c;font-weight:normal;}
+    .input{width:16px; height:16px; margin:8px auto; line-height:16px; border:1px solid #d3d3d3; padding:2px;}
+    .label{height: 24px;line-height: 16px;display: inline-block;vertical-align: middle;}
+    .page{width:100%;float:left;}
+    .page h3
+    {
+      font-size: 14px;
+      border-bottom: 1px dotted #ccc;
+      margin-bottom: 20px;
+      padding: 5px;
+      text-align: left;
+    }
+    .selfTable{
+       background: black;
+       margin: 3px;
+       color: white;
+       width: 20px;
+       height: 20px;
+       text-align: center;
+       border-radius: 4px;
+       font-size: 10px;
+       line-height: 20px;
+       cursor: pointer;
+    }
+      .selfTable_grey{
+          background: #C3B8B8;
+          margin: 3px;
+          color: white;
+          width: 15px;
+          height: 15px;
+          text-align: center;
+          font-size: 10px;
+          line-height: 15px;
+    }
+      .selfTable_red{
+          background: #BD2F34;
+          margin: 3px;
+          color: white;
+          width: 15px;
+          height: 15px;
+          text-align: center;
+          border-radius: 10px;
+          font-size: 14px;
+          line-height: 15px;
+          cursor: pointer;
+    }
+    .selfTableOther{
+       background: #5694D9;
+       margin: 3px;
+       color: white;
+       width: 40px;
+       height: 15px;
+       text-align: center;
+       font-size: 10px;
+       line-height: 15px;
+       cursor: pointer;
+    }
+    .page h3 em{font-size:12px; font-weight:500; font-style:normal}
+    .page p{line-height:24px;}
+    .page p label{font-size:14px; display:block;}
+    .btn_nav{height:36px; line-height:36px; margin-right: 4.6%;margin-top: 3%;text-align: right;}
+    .prev,.next{width:100px; height:32px; line-height:32px;  border:1px solid #d3d3d3; cursor:pointer}
+    .page h1{ border-bottom:1px dotted #ccc;margin-top: 55%; }
+    .configtable {border: 1px solid rgba(115, 120, 126, 0.32);text-align: center;height:40px;}
+    .trClass{
+       border: 1px solid #e7e7eb;
+    }
+    .TDClass{
+       text-align: center;height: 30px;width:150px;
+       border: 1px solid #e7e7eb;
+    }
+</style>
+
+<div id="deviceForm">
+    <ul id="status">
+        <li class="active" id="tab1"><span>商品信息管理</span></li>
+    </ul>
+    <div class="items">
+        <div class="page" id="baseInfo">
+            <div style="float:left;width: 100%;height:480px;overflow:auto;margin-top: 10px;">
+                    <table width="98%" style="margin:0px 15px 15px 15px;">
+                        <tr>
+                            <td width="15%"><label style='color:red;'>*</label><label><span>商品分类</span></label></td>
+                            <td>
+                               <select id="goodsType" name="goodsType" style="width:200px;height: 30px;"></select>
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                            <td width="15%"><label style='color:red;'>*</label><label><span>商品名称</span></label></td>
+                            <td><input type="text" class="input" id="goodsName" name="goodsName" style="width:200px;height:28px;"/></td>
+                        </tr>
+                        
+                        <tr>
+                           <td width="15%"><label style='color:red;'>*</label><label><span>商品规格</span></label></td>
+                           <td> <div id='goodsTable' style='width: 600px;overflow: auto;text-align: center;margin-top:5px;'> </div></td>
+                        </tr>
+                        
+                        <tr>
+                            <td width="15%"></td>
+                            <td>
+                              <input type="button" class='btn btn-primary submit' id="add" style="width: 105px;height: 30px;margin-top: 5px;"/>
+                              <span>(单击蓝色字体可编辑内容)</span>
+                           </td>
+                        </tr>
+                        
+                        <tr>
+                            <td width="15%"><label style='color:red;'>*</label><label><span>售卖状态</span></label></td>
+                            <td>
+                               <select id="saleState" name="saleState" style="width:200px;height: 30px;margin-top: 8px;">
+                                 <option value="1">售卖中</option>
+                                 <option value="2">暂停售卖</option>
+                               </select>
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                            <td width="15%"><label style='color:red;'>&nbsp;</label><label><span>商品描述</span></label></td>
+                            <td>
+                               <textarea rows="3" cols="97"  id="descript" name="descript" style="margin-top: 8px;margin-bottom: 8px;"></textarea>
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                            <td width="15%"><label style='color:red;'>*</label><label><span>商品图片</span></label></td>
+                            <td>
+                               <input type="file" id="file" multiple size="120"/>
+                               <input type="button"  id="uploadFile" value="开始上传" style="margin-top: 5px;width: 80px;height: 25px;"/>
+                            </td>
+                        </tr>
+                       
+						<!--  <tr>
+                            <td width="15%"><label style='color:red;'>*</label><label><span>商品图片</span></label></td>
+                            <td><span id='select_file_button'></span><label id='picture'><span id="imageLimit"></span></label></td>
+                        </tr>-->
+						<tr>
+						   <td width='15%'>
+						     <input style='width:250px' type='hidden' id='imagepath' name='imagepath'  />
+						     <input style='width:250px' type='hidden' id='imageMd5' name='imageMd5'  />
+						   </td>
+						   <td>
+						     <img id='photoFileId' width='80' height='80' src='' style='margin-top:10px;'/>
+						   </td>
+						</tr>
+                    </table>
+            </div>
+            <h1></h1>
+            <div class="btn_nav">
+               <table style="width:100%;">
+                 <tr>
+                  <td>
+                    <input type="button" class='btn btn-primary submit' id='save' style="margin-left:10px;width: 105px;margin-top: -40px;height: 30px;"/>
+                 </td>
+                 </tr>
+               </table>
+            </div>
+        </div>
+     </div>
+</div>

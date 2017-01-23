@@ -27,15 +27,10 @@ define(function(require){
 		"title":"规格",
 		"dataIndex" : "specifications",
 		"cls" : null,
-		"width" : "10%"
+		"width" : "40%"
 	},{
 		"title":"价格",
 		"dataIndex" : "price",
-		"cls" : null,
-		"width" : "10%"
-	},{
-		"title":"餐盒信息",
-		"dataIndex" : "specifications",
 		"cls" : null,
 		"width" : "10%"
 	},{
@@ -48,27 +43,6 @@ define(function(require){
 		"dataIndex" : "descript",
 		"cls" : null,
 		"width" : "10%"
-	},{                                             
-		"title":"创建时间",
-		"dataIndex" : "createTime",
-		"cls" : null,
-		"width" : "10%",
-		render:function(data, type, row){
-			if(data){
-				return cloud.util.dateFormat(new Date(data), "yyyy-MM-dd hh:mm:ss");
-			}
-			
-		}
-	},{                                             
-		"title":"修改时间",
-		"dataIndex" : "updateTime",
-		"cls" : null,
-		"width" : "10%",
-		render:function(data, type, row){
-			if(data){
-				return cloud.util.dateFormat(new Date(data), "yyyy-MM-dd hh:mm:ss");
-			}
-		}
 	}];
 	var list = Class.create(cloud.Component,{
 		initialize:function($super,options){

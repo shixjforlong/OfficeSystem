@@ -40,14 +40,14 @@ define(function(require){
 			var htmls1= "<table width='90%' style='margin-left:80px;margin-top:10px;height: 150px;' border='0'>"
 					    +"<tr style='height:30px;'>"
 						+ "<td width='25%' height='20px' style='font-size: 12px;'><label style='color:red;'>*</label> <label>商品分类名称</label></td>"
-						+ "<td  height='20px'><input style='border-radius: 0px;width: 270px;height: 22px; margin-left: 0px;' type='text' id='typeName' name='typeName' /></td>"
+						+ "<td  height='20px'><input style='border-radius: 0px;width: 270px;height: 32px; margin-left: 0px;' type='text' id='typeName' name='typeName' /></td>"
 						+"</tr>"
 						+"<tr style='height:30px;'>"
 					    + "<td width='25%' height='20px' style='font-size: 12px;'><label style='color:red;'>&nbsp;</label> <label>描述</label></td>"
-						+ "<td  height='20px'><input style='border-radius: 0px;width: 270px;height: 22px; margin-left: 0px;' type='text' id='desc' name='desc'/></td>"
+						+ "<td  height='20px'><input style='border-radius: 0px;width: 270px;height: 32px; margin-left: 0px;' type='text' id='descript' name='descript'/></td>"
 						+"</tr>"
 					    + " </table>"
-					    + "<div style='text-align: right;width: 94%;margin-top: 10px;border-top: 1px solid #f2f2f2;'><a id='product-config-save' class='btn btn-primary submit' style='margin-top: 8px;'>保存</a><a id='product-config-cancel' style='margin-left: 10px;margin-top: 8px;' class='btn btn-primary submit'>取消</a></div>";
+					    + "<div style='text-align: right;width: 94%;margin-top: 10px;border-top: 1px solid #f2f2f2;margin-left: 18px;'><a id='product-config-save' class='btn btn-primary submit' style='margin-top: 8px;'>保存</a><a id='product-config-cancel' style='margin-left: 10px;margin-top: 8px;' class='btn btn-primary submit'>取消</a></div>";
 	        $("#winContent").append(htmls1);
 	        $("#ui-window-content").css("overflow","hidden");
 		},
@@ -60,7 +60,7 @@ define(function(require){
             //保存
 		    $("#product-config-save").bind("click",function(){
 	        	   var name = $("#typeName").val();
-	     		   var desc = $("#desc").val();
+	     		   var descript = $("#descript").val();
 	     		   if(name==null||name.replace(/(^\s*)|(\s*$)/g,"")==""){
           			   dialog.render({text:"用商品分类名称不能为空"});
           			   return;
@@ -68,7 +68,7 @@ define(function(require){
           		   
 	     		   var finaldata={
 	 	             		name:name,
-	 	             		desc:desc
+	 	             		descript:descript
 	 	           };
 	     		   if(self._id){
 	     			  Service.updateGoodsType(self._id,finaldata,function(data){
@@ -94,7 +94,7 @@ define(function(require){
 			if(this._id){
 				Service.getGoodsTypeInfoById(this._id,function(data){
 		     		 $("#typeName").val(data.result.name==null?"":data.result.name);
-		     		 $("#desc").val(data.result.desc==null?"":data.result.desc);
+		     		 $("#descript").val(data.result.descript==null?"":data.result.descript);
 				});
 			}
 		},

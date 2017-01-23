@@ -12,34 +12,12 @@ define(function(require){
 		"title":"商品分类名称",
 		"dataIndex" : "name",
 		"cls" : null,
-		"width" : "30%"
+		"width" : "40%"
 	},{
 		"title":"描述",
-		"dataIndex" : "desc",
+		"dataIndex" : "descript",
 		"cls" : null,
-		"width" : "30%"
-	},{                                             
-		"title":"创建时间",
-		"dataIndex" : "createTime",
-		"cls" : null,
-		"width" : "20%",
-		render:function(data, type, row){
-			if(data){
-				return cloud.util.dateFormat(new Date(data), "yyyy-MM-dd hh:mm:ss");
-			}
-			
-		}
-	},{                                             
-		"title":"修改时间",
-		"dataIndex" : "updateTime",
-		"cls" : null,
-		"width" : "20%",
-		render:function(data, type, row){
-			if(data){
-				return cloud.util.dateFormat(new Date(data), "yyyy-MM-dd hh:mm:ss");
-			}
-			
-		}
+		"width" : "60%"
 	}];
 	var list = Class.create(cloud.Component,{
 		initialize:function($super,options){
@@ -112,7 +90,7 @@ define(function(require){
 			this.setDataTable();
 		},
 		setDataTable : function() {
-			//this.loadTableData(30,0);
+			this.loadTableData(30,0);
 		},
 		loadTableData : function(limit,cursor) {
 			cloud.util.mask("#goodsType_list_table");
@@ -125,12 +103,13 @@ define(function(require){
         			name:name
         	};
             Service.getAllGoodsType(self.searchData,limit,cursor,function(data){
-	   				 var total = data.result.length;
-	   				 self.pageRecordTotal = total;
-	   	        	 self.totalCount = data.result.length;
-	           		 self.listTable.render(data.result);
-	   	        	 self._renderpage(data, 1);
-	   	        	 cloud.util.unmask("#goodsType_list_table");
+            	console.log(data);
+	   		    var total = data.result.length;
+	   		    self.pageRecordTotal = total;
+	   	        self.totalCount = data.result.length;
+	            self.listTable.render(data.result);
+	   	        self._renderpage(data, 1);
+	   	        cloud.util.unmask("#goodsType_list_table");
    			}, self);
 			
 		},

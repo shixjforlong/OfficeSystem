@@ -3,6 +3,10 @@ define(function(require){
 	var _Window = require("cloud/components/window");
 	require("cloud/lib/plugin/jquery.uploadify");
 	var Service = require("./service");
+	var winHtml = require("text!./goodsManage.html");
+	var Uploader = require("cloud/components/uploader");
+	require("cloud/lib/plugin/jquery.uploadify");
+	var Button = require("cloud/components/button");
 	
 	var Window = Class.create(cloud.Component,{
 		initialize:function($super,options){
@@ -17,11 +21,11 @@ define(function(require){
 				title: "商品管理",
 				top: "center",
 				left: "center",
-				height:252,
-				width: 650,
+				height:600,
+				width: 900,
 				mask: true,
 				drag:true,
-				content: "<div id='winContent' style='border-top: 1px solid #f2f2f2;'></div>",
+				content:winHtml,
 				events: {
 					"onClose": function() {
 							this.window.destroy();
@@ -31,63 +35,126 @@ define(function(require){
 				}
 			});
 			this.window.show();	
-			//this._renderForm();
-			//this._renderBtn();
+			$("#save").val("保存");
+			$("#add").val("新增一行");
+			$("#imageLimit").text("(支持格式为jpg,gif,png且大小不大于1Mb的图片)");
+			this._renderGoodsTable();
+			this._renderBtn();
+			//this.initUploader();
+			
 		    //this._renderGetData();
 		},
-		_renderForm:function(){				
-		
-			var htmls1= "<table width='90%' style='margin-left:80px;margin-top:10px;height: 150px;' border='0'>"
-					    +"<tr style='height:30px;'>"
-						+ "<td width='25%' height='20px' style='font-size: 12px;'><label style='color:red;'>*</label> <label>商品分类名称</label></td>"
-						+ "<td  height='20px'><input style='border-radius: 0px;width: 270px;height: 22px; margin-left: 0px;' type='text' id='typeName' name='typeName' /></td>"
-						+"</tr>"
-						+"<tr style='height:30px;'>"
-					    + "<td width='25%' height='20px' style='font-size: 12px;'><label style='color:red;'>&nbsp;</label> <label>描述</label></td>"
-						+ "<td  height='20px'><input style='border-radius: 0px;width: 270px;height: 22px; margin-left: 0px;' type='text' id='desc' name='desc'/></td>"
-						+"</tr>"
-					    + " </table>"
-					    + "<div style='text-align: right;width: 94%;margin-top: 10px;border-top: 1px solid #f2f2f2;'><a id='product-config-save' class='btn btn-primary submit' style='margin-top: 8px;'>保存</a><a id='product-config-cancel' style='margin-left: 10px;margin-top: 8px;' class='btn btn-primary submit'>取消</a></div>";
-	        $("#winContent").append(htmls1);
-	        $("#ui-window-content").css("overflow","hidden");
+		_renderGoodsTable:function(){
+			$('#goodsTable').append("<table id='productTable' style='border: 1px solid #e7e7eb;'>"+
+				   "<tr class='trClass'>"+
+				    "<td  class='TDClass'>"+
+				       "<div  style='width:100px;'>商品名称</div>"+
+				     "</td>"+
+				     "<td class='TDClass'>"+
+				       "<div  style='width:100px;'>商品价格</div>"+
+				     "</td>"+
+				     "<td class='TDClass'>"+
+				       "<div  style='width:100px;'>餐盒价格</div>"+
+				     "</td>"+
+				     "<td class='TDClass'>"+
+				       "<div  style='width:100px;'>餐盒数量</div>"+
+				     "</td>"+
+				     "<td class='TDClass'>"+
+				       "<div>操作</div>"+
+				     "</td>"+
+				   "</tr>"+
+				"</table>"
+			);
+			this.tdEdit();
+		},
+		tdEdit:function(){
+			$('.tdclass').click(function () {
+		        var tdObj = $(this);  
+		        var oldText = $(this).context.innerText; 
+		        if(oldText){
+		        }else{
+		        	oldText="请输入";
+		        }
+		        var inputObj = $("<input type='text' value='" + oldText + "'/>");  
+		        inputObj.css("border-width", '1px');  
+		        inputObj.click(function () {  
+		            return false;  
+		        });  
+		        inputObj.width(tdObj.width());  
+		        inputObj.height("30");  
+		        inputObj.css("line-height", '30px'); 
+		        inputObj.css("margin", 0);  
+		        inputObj.css("padding", 0);  
+		        inputObj.css("text-align", "center");  
+		        inputObj.css("color", "black");  
+		        inputObj.css("font-size", "12px");  
+		        inputObj.css("background-color",'white');  
+		        tdObj.html(inputObj);  
+		        inputObj.blur(function () {
+		            var newText = $(this).val();  
+		            tdObj.html(newText);          
+		        });  
+		        inputObj.trigger("focus").trigger("select");  
+		   });  
+		},
+		initUploader:function(){
+            this.uploader = new Uploader({
+                browseElement: $("#select_file_button"),
+                url: "/api/file",
+                autoUpload: true,
+                filters: [{
+                    title: "Image files",
+                    extensions: "jpg,gif,png"
+                }],
+                maxFileSize: "1mb",
+                events: {
+                	"onError": function(err){
+						cloud.util.unmask("#winContent");
+					},
+					"onFilesAdded" : function(file){
+						var name=file[0].name;
+					},
+                    "onFileUploaded": function(response, file){
+                    	if ($.isPlainObject(response)){
+                    		if(response.error){
+                    			dialog.render({text:"上传文件失败"});
+							}else{
+								var src= cloud.config.FILE_SERVER_URL + "/api/file/" +response.result._id+ "?access_token=" + cloud.Ajax.getAccessToken();
+		                        $("#photoFileId").attr("src", src);
+		                        $("#imagepath").val(response.result._id);
+		                        $("#imageMd5").val(response.result.md5);
+							}
+                    	}
+                    	
+                    	cloud.util.unmask("#winContent");
+                    },
+                    "beforeFileUpload":function(){
+						cloud.util.mask(
+		                	"#winContent",
+		                	locale.get("uploading_files")
+		                );
+					}
+                }
+            });
 		},
 		_renderBtn:function(){
 			var self = this;
-		    //取消
-		    $("#product-config-cancel").bind("click",function(){
-		    	self.window.destroy();
-		    });
+			/*self.uploadButton=new Button({
+	                container:$("#select_file_button"),
+	                text:"选择文件",
+	                lang : "{title:'请选择文件',text:'请选择文件'}"
+	        });*/
+			$("#uploadFile").bind("click",function(){
+				var files = document.getElementById("file").files;
+			    for(var i = 0; i < files.length; i+=1) {
+			        var file = files[i];
+			        console.log(file);
+			        console.log(file.name);
+			     }
+			});
             //保存
-		    $("#product-config-save").bind("click",function(){
-	        	   var name = $("#typeName").val();
-	     		   var desc = $("#desc").val();
-	     		   if(name==null||name.replace(/(^\s*)|(\s*$)/g,"")==""){
-          			   dialog.render({text:"用商品分类名称不能为空"});
-          			   return;
-          		   };
-          		   
-	     		   var finaldata={
-	 	             		name:name,
-	 	             		desc:desc
-	 	           };
-	     		   if(self._id){
-	     			  Service.updateGoodsType(self._id,finaldata,function(data){
-                    	   if(data.error!=null){
-    	                	  
-    	                	}else{
-    							self.window.destroy();
-    		 	             	self.fire("getGoodsTypeList");
-    						}
-    			       });
-	     		   }else{
-	     			  Service.addGoodsType(finaldata,function(data){
-	 	                	if(data.error!=null){
-	 	                	}else{
-								self.window.destroy();
-			 	             	self.fire("getGoodsTypeList");
-							}
-	 				   });
-	     		   }
+		    $("#save").bind("click",function(){
+	        	  
 	        });
 		},
 		_renderGetData:function(){
