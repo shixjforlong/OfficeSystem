@@ -19,7 +19,7 @@ define(function(require){
               var $htmls = $(+"<div></div>" +
               "<div id='search-bar' style='width:auto;margin-top:10px;margin-left:5px;'>" +
               "<label style='margin:auto 10px auto 10px ;margin-right: 6px;'>商品分类名称</label>" +
-              "<input style='width:200px;' type='text'  id='name' />"  +
+              "<input style='width:200px;height:28px;' type='text'  id='name' />"  +
               "</div>");
               this.element.append($htmls);
 		},
@@ -63,6 +63,16 @@ define(function(require){
                 events: {
                     click: function(){
                     	self.fire("drop");
+                    }
+                }
+            });
+            
+            var orderBtn = new Button({
+                text: "排序",
+                container: $("#search-bar"),
+                events: {
+                    click: function(){
+                    	self.fire("order");
                     }
                 }
             });

@@ -7,6 +7,7 @@ define(function(require){
 	var Button = require("cloud/components/button");
 	var Paging = require("cloud/components/paging");
 	var AddgoodsType = require("./goodsTypeMan-window");
+	var OrdergoodsType = require("./goodsType-order-window");
 	var Service = require("./service");
 	var columns = [ {
 		"title":"商品分类名称",
@@ -154,6 +155,19 @@ define(function(require){
 				events : {
 					  query: function(){
 						  self.loadTableData($(".paging-limit-select").val(),0);
+					  },
+					  order:function(){
+						  if (this.orderPro) {
+	                          this.orderPro.destroy();
+	                      }
+	                      this.orderPro = new OrdergoodsType({
+	                            selector: "body",
+	                            events: {
+	                                "getGoodsTypeList": function() {
+	                                	self.loadTableData($(".paging-limit-select").val(),0);
+	                                }
+	                            }
+	                      });
 					  },
 					  add:function(){
 						  if (this.addPro) {

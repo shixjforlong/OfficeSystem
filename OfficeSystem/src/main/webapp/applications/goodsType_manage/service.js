@@ -15,8 +15,12 @@ define(function(require) {
         },
         getAllGoodsType: function(searchData, limit, cursor, callback, context) {
             var self = this;
+            var url="/sapi/goodsType/list?limit="+limit+"&cursor="+cursor;
+            if(searchData.name){
+            	url = url+"&name="+searchData.name;
+            }
             $.ajax({
-                url: "/sapi/goodsType/list?limit="+limit+"&cursor="+cursor,
+                url: url,
                 type: "GET",
                 success: function(data) {
                     callback.call(context || self, data);

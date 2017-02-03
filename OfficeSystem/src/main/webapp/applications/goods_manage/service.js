@@ -26,8 +26,19 @@ define(function(require) {
         },
         getAllgoods: function(searchData, limit, cursor, callback, context) {
             var self = this;
+            var url="/sapi/goods/list?limit="+limit+"&cursor="+cursor;
+            if(searchData.name){
+            	url = url+"&name="+searchData.name;
+            }
+            if(searchData.typeID && searchData.typeID!="-1"){
+            	url = url+"&typeID="+searchData.typeID;
+            }
+            if(searchData.state!="-1"){
+                url = url+"&state="+searchData.state;
+            }
+            
             $.ajax({
-                url: "/sapi/goods/list?limit="+limit+"&cursor="+cursor,
+                url: url,
                 type: "GET",
                 success: function(data) {
                     callback.call(context || self, data);

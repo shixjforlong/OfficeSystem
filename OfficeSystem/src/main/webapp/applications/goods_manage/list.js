@@ -186,8 +186,13 @@ define(function(require){
         	if(name){
         		name = self.stripscript(name);
         	}
+        	var type = $("#type").find("option:selected").val();
+        	var state= $("#state").find("option:selected").val();
+        	
         	self.searchData={
-        			name:name
+        			name:name,
+        			typeID:type,
+        			state:state
         	};
             Service.getAllgoods(self.searchData,limit,cursor,function(data){
 	   				 var total = data.result.length;
