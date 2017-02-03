@@ -83,7 +83,7 @@
     </ul>
     <div class="items">
         <div class="page" id="baseInfo">
-            <div style="float:left;width: 100%;height:480px;overflow:auto;margin-top: 10px;">
+            <div style="float:left;width: 100%;height:450px;overflow:auto;margin-top: 10px;">
                     <table width="98%" style="margin:0px 15px 15px 15px;">
                         <tr>
                             <td width="15%"><label style='color:red;'>*</label><label><span>商品分类</span></label></td>
@@ -114,8 +114,8 @@
                             <td width="15%"><label style='color:red;'>*</label><label><span>售卖状态</span></label></td>
                             <td>
                                <select id="saleState" name="saleState" style="width:200px;height: 30px;margin-top: 8px;">
-                                 <option value="1">售卖中</option>
-                                 <option value="2">暂停售卖</option>
+                                 <option value="0">售卖中</option>
+                                 <option value="1">暂停售卖</option>
                                </select>
                             </td>
                         </tr>
@@ -130,19 +130,12 @@
                         <tr>
                             <td width="15%"><label style='color:red;'>*</label><label><span>商品图片</span></label></td>
                             <td>
-                               <input type="file" id="file" multiple size="120"/>
-                               <input type="button"  id="uploadFile" value="开始上传" style="margin-top: 5px;width: 80px;height: 25px;"/>
+                               <input type="button"  id="uploadFile" value="上传商品图片" style="margin-top: 5px;width: 80px;height: 25px;"/>
                             </td>
                         </tr>
-                       
-						<!--  <tr>
-                            <td width="15%"><label style='color:red;'>*</label><label><span>商品图片</span></label></td>
-                            <td><span id='select_file_button'></span><label id='picture'><span id="imageLimit"></span></label></td>
-                        </tr>-->
 						<tr>
 						   <td width='15%'>
-						     <input style='width:250px' type='hidden' id='imagepath' name='imagepath'  />
-						     <input style='width:250px' type='hidden' id='imageMd5' name='imageMd5'  />
+						     <input style='width:250px' type='hidden' id='fileName' name='fileName'  />
 						   </td>
 						   <td>
 						     <img id='photoFileId' width='80' height='80' src='' style='margin-top:10px;'/>

@@ -3,10 +3,21 @@ define(function(require) {
     var Service = Class.create({
         initialize: function(){
         },
+        
+        getAllGoodsType: function(searchData, limit, cursor, callback, context) {
+            var self = this;
+            $.ajax({
+                url: "/sapi/goodsType/list?limit="+limit+"&cursor="+cursor,
+                type: "GET",
+                success: function(data) {
+                    callback.call(context || self, data);
+                }
+            });
+        },
        
-        deletegoodsById: function(id, callback, context) {
+        deleteGoodsById: function(id, callback, context) {
         	$.ajax({
-                url: "http://localhost/sapi/goods/" + id,
+                url: "/sapi/goods/" + id,
                 type: "DELETE",
                 success: function(data) {
                     callback.call(context || this, data);
@@ -16,16 +27,16 @@ define(function(require) {
         getAllgoods: function(searchData, limit, cursor, callback, context) {
             var self = this;
             $.ajax({
-                url: "http://localhost/sapi/goods/list?limit="+limit+"&cursor="+cursor,
+                url: "/sapi/goods/list?limit="+limit+"&cursor="+cursor,
                 type: "GET",
                 success: function(data) {
                     callback.call(context || self, data);
                 }
             });
         },
-        addgoods:function(data,callback,context){
+        addGoods:function(data,callback,context){
         	$.ajax({
-				url:"http://localhost/sapi/goods/add",
+				url:"/sapi/goods/add",
 				type : "post",
 				"contentType": "application/json", 
 				data:JSON.stringify(data),
@@ -37,7 +48,7 @@ define(function(require) {
 	            }
 			});
         },
-        getgoodsInfoById: function(id, callback, context) {
+        getGoodsInfoById: function(id, callback, context) {
             
         	$.ajax({
                 url: "http://localhost/sapi/goods/"+id,
@@ -47,10 +58,10 @@ define(function(require) {
                 }
             });
         },
-        updategoods: function(id,contentData, callback, context) {
+        updateGoods: function(id,contentData, callback, context) {
             var self = this;
             $.ajax({
-                url: "http://localhost/sapi/goods/"+ id,
+                url: "/sapi/goods/"+ id,
                 type: "PUT",
                 "contentType": "application/json", 
 				data:JSON.stringify(contentData),

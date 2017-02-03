@@ -15,35 +15,97 @@ define(function(require){
 		"width" : "10%"
 	},{
 		"title":"图片",
-		"dataIndex" : "imagepath",
+		"dataIndex" : "imageName",
+		"cls" : null,
+		"width" : "10%",
+		 render:function(data, type, row){
+			    var productsImage = "product";
+			    var  display = "";
+			    if(data){
+			    	var src = "http://101.201.150.141/file/"+data;
+	                display += new Template(
+	                    "<img src='"+src+"' style='width: 50px;height: 50px;'/>")
+	                    .evaluate({
+	                        status : productsImage
+	                    });
+			    }
+             return display;
+         }
+	},{
+		"title":"商品分类",
+		"dataIndex" : "typeName",
 		"cls" : null,
 		"width" : "10%"
 	},{
-		"title":"商品分类",
-		"dataIndex" : "type",
+		"title":"价格(元)",
+		"dataIndex" : "price",
 		"cls" : null,
-		"width" : "10%"
+		"width" : "10%",
+		render: priceConvertor
 	},{
 		"title":"规格",
 		"dataIndex" : "specifications",
 		"cls" : null,
-		"width" : "40%"
-	},{
-		"title":"价格",
-		"dataIndex" : "price",
-		"cls" : null,
-		"width" : "10%"
+		"width" : "40%",
+		 render: function(data, type, row) {
+	    	    var display = "";
+	    	    var array = data.split(";");
+	    	    if(array.length>0){
+	    	    	display += new Template(
+		    	             "<table  border='1px' style='border-color: gainsboro;'>"+
+		    			       "<tr style='border-bottom:0px;border-top:0px;'><td width='25%'>商品名称</td><td width='25%'>价格</td><td width='25%'>餐盒价格</td><td width='25%'>餐盒数量</td></tr>"
+		    			     )
+		    	             .evaluate({
+		    	                 status : ''
+		    	             });
+	    	    	for(var i=0;i<array.length-1;i++){
+	    	    	    var tds = array[i].split(",");
+	    	    		display += new Template(
+	   	    			       "<tr style='border-bottom:0px;border-top:0px;'><td width='25%'>"+tds[0]+"</td><td width='25%'>"+tds[1]+"</td><td width='25%'>"+tds[2]+"</td><td width='25%'>"+tds[3]+"</td></tr>"+
+	   	    			     "</table>")
+	   	    	             .evaluate({
+	   	    	                 status : ''
+	   	    	             });
+	    	    	}
+	    	    }
+	    		return display;
+	     }
 	},{
 		"title":"售卖状态",
 		"dataIndex" : "state",
 		"cls" : null,
-		"width" : "10%"
+		"width" : "10%",
+		 render: stateConvertor
 	},{
 		"title":"商品描述",
 		"dataIndex" : "descript",
 		"cls" : null,
 		"width" : "10%"
 	}];
+	function priceConvertor(value, type) {
+    	if(value==null){
+    		return value
+    	}
+        return value / 100;
+    }
+	function stateConvertor(value, type) {//0售卖中  1暂停售卖
+        var display = "";
+        if ("display" == type) {
+            switch (value) {
+                case "0":
+                    display = "售卖中";
+                    break;
+                case "1":
+                    display = "暂停售卖";
+                    break;
+                default:
+                    break;
+            }
+            return display;
+        } else {
+            return value;
+        }
+    }
 	var list = Class.create(cloud.Component,{
 		initialize:function($super,options){
 			$super(options);
@@ -115,7 +177,7 @@ define(function(require){
 			this.setDataTable();
 		},
 		setDataTable : function() {
-			//this.loadTableData(30,0);
+			this.loadTableData(30,0);
 		},
 		loadTableData : function(limit,cursor) {
 			cloud.util.mask("#goods_list_table");
@@ -240,7 +302,7 @@ define(function(require){
 	                                            if(ids.length>0){
 	                                            	for(var i=0;i<ids.length;i++){
 	                                            		var id = ids[i];
-	                                            		 Service.deletegoodsById(id, function(data) {
+	                                            		 Service.deleteGoodsById(id, function(data) {
 	 	                                            		if(data.result == "success"){
 	 	                                            			  if (self.pageRecordTotal == 1) {
 	 	                                                              var cursor = ($(".paging-page-current").val() - 2) * $(".paging-limit-select").val();

@@ -6,7 +6,7 @@ define(function(require) {
        
         deleteGoodsTypeById: function(id, callback, context) {
         	$.ajax({
-                url: "http://localhost/sapi/goodsType/" + id,
+                url: "/sapi/goodsType/" + id,
                 type: "DELETE",
                 success: function(data) {
                     callback.call(context || this, data);
@@ -16,7 +16,7 @@ define(function(require) {
         getAllGoodsType: function(searchData, limit, cursor, callback, context) {
             var self = this;
             $.ajax({
-                url: "http://localhost/sapi/goodsType/list?limit="+limit+"&cursor="+cursor,
+                url: "/sapi/goodsType/list?limit="+limit+"&cursor="+cursor,
                 type: "GET",
                 success: function(data) {
                     callback.call(context || self, data);
@@ -25,7 +25,7 @@ define(function(require) {
         },
         addGoodsType:function(data,callback,context){
         	$.ajax({
-				url:"http://localhost/sapi/goodsType/add",
+				url:"/sapi/goodsType/add",
 				type : "post",
 				"contentType": "application/json", 
 				data:JSON.stringify(data),
@@ -40,7 +40,7 @@ define(function(require) {
         getGoodsTypeInfoById: function(id, callback, context) {
             
         	$.ajax({
-                url: "http://localhost/sapi/goodsType/"+id,
+                url: "/sapi/goodsType/"+id,
                 type: "GET",
                 success: function(data) {
                     callback.call(context || self, data);
@@ -50,7 +50,7 @@ define(function(require) {
         updateGoodsType: function(id,contentData, callback, context) {
             var self = this;
             $.ajax({
-                url: "http://localhost/sapi/goodsType/"+ id,
+                url: "/sapi/goodsType/"+ id,
                 type: "PUT",
                 "contentType": "application/json", 
 				data:JSON.stringify(contentData),
