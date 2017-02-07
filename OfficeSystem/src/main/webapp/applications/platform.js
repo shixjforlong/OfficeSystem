@@ -46,7 +46,9 @@ define(function(require) {
 	                		 });
 	                		 
 	                     }else{//没有二级菜单  首页
-	                    	
+	                    	 if (one.subNavs[0].url){
+	                    		 this.loadApplication(one.subNavs[0]);
+	                    	 }
 	                     }
                    }
              }

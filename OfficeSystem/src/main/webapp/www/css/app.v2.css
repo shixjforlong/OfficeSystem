@@ -8013,7 +8013,7 @@ background-color:rgba(50, 50, 50, 0.2);
 	text-decoration:none;
 }
 .navbar-brand img {
-	max-height:20px;
+	max-height:50px;
 	margin-top:-4px;
 	vertical-align:middle;
 }

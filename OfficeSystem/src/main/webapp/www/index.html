@@ -12,26 +12,21 @@
 </head>
 <body>
 <section id="content" class="m-t-lg wrapper-md animated fadeInUp">
-  <div class="container aside-xxl"> <a class="navbar-brand block" href="index.html">后台系统</a>
+  <div class="container aside-xxl"> <a class="navbar-brand block" href="index.html">食国微信管理平台</a>
     <section class="panel panel-default bg-white m-t-lg">
       <header class="panel-heading text-center"> <strong>登录</strong> </header>
-      <form  class="panel-body wrapper-lg">
+      <div  class="panel-body wrapper-lg">
         <div class="form-group">
           <label class="control-label">用户名</label>
-          <input type="email" placeholder="test@example.com" class="form-control input-lg">
+          <input type="text" id="username" name="username" placeholder="请输入用户名" class="form-control input-lg">
         </div>
         <div class="form-group">
           <label class="control-label">密码</label>
-          <input type="password" id="inputPassword" placeholder="123456" class="form-control input-lg">
+          <input type="password" id="password" placeholder="请输入密码" class="form-control input-lg">
         </div>
-        <div class="checkbox">
-          <label>
-            <input type="checkbox">
-            记住我 </label>
-        </div>
-        <a href="#" class="pull-right m-t-xs"><small>忘记密码?</small></a>
+         <a href="#" class="pull-right m-t-xs"><span id="errorMessage" style="color:red;"></span></a> 
         <button id="login" class="btn btn-primary">登录</button>
-      </form>
+      </div>
     </section>
   </div>
 </section>

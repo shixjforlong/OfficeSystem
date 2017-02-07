@@ -9,7 +9,7 @@ define(function(require) {
 				order : 0,
 				defaultOpen : true,
 				defaultShow : true,
-				url : ""
+				url : "./home/homeMain.js"
 			} ]
 		};
 	//系统
@@ -73,6 +73,12 @@ define(function(require) {
 					order : 0,
 					operation:["r","w"],
 					url : "./vip_manage/vipMain.js"
+				},{                       
+					name : "wxusers_manage", //会员信息管理
+					defaultShow : true,
+					order : 0,
+					operation:["r","w"],
+					url : "./wxuser_manage/userMain.js"
 				}]
 			}]	
 	};
