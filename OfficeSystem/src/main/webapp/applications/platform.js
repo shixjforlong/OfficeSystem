@@ -62,7 +62,6 @@ define(function(require) {
             	
 	    		 if(loadArray.length>0){
 	    			 for(var i=0;i<loadArray.length;i++){
-	    				 console.log(loadArray[i].id);
 	    				 if($(this)[0].id == loadArray[i].id){
 	    					 self.loadApplication(loadArray[i].loadObj);
 	    				 }

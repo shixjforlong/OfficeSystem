@@ -21,6 +21,7 @@ var lang = {
              system_user_manage:"用户列表",
              goods_type_manage:"商品分类列表",
              goodsType_manage:"商品分类管理",
-             goods_manage:"商品列表"
+             goods_manage:"商品列表",
+             vip_manage:"会员等级管理"
 		}
 };

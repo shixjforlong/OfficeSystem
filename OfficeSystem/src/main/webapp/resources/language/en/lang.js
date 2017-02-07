@@ -22,6 +22,7 @@ var lang = {
             system_user_manage:"user list",
             goods_type_manage:"goods type list",
             goodsType_manage:"goodsType manage",
-            goods_manage:"goods manage"
+            goods_manage:"goods manage",
+            vip_manage:""
 		}
 };

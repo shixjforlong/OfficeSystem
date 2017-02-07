@@ -57,9 +57,28 @@ define(function(require) {
 				}]
 			}]
 		};
+	var vip={
+			name : "vip",
+			order :1,
+			id:"sg-vip",
+			subNavs:[{
+				name:"vip_manage",
+				order : 0,
+				defaultOpen : false,
+				defaultShow : true,
+				subModule:[
+				{                       
+					name : "vips_manage", //会员等级管理
+					defaultShow : true,
+					order : 0,
+					operation:["r","w"],
+					url : "./vip_manage/vipMain.js"
+				}]
+			}]	
+	};
 	
 	var appConfig = {
-		modules : [ home,system,goods]
+		modules : [ home,system,goods,vip]
 	}
 
 	return appConfig;
