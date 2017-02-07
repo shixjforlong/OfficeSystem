@@ -132,7 +132,9 @@ define(function(require){
 			$("#goods_list").css("width",$(".wrap").width());
 			$("#goods_list_paging").css("width",$(".wrap").width());
 			
-			$("#goods_list").css("height",$("#content-operation-menu").height() - $(".container-hd").height() - $(".main_hd").height());
+			var headHeight = $(".navbar-header").height();
+			$("#goods_list").css("height",$(window).height() -headHeight - $(".main_hd").height());
+			
 			
 		    var listHeight = $("#goods_list").height();
 	        var barHeight = $("#goods_list_bar").height()*2;

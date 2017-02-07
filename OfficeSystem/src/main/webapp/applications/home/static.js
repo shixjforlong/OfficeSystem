@@ -7,6 +7,7 @@ define(function(require){
 		initialize:function($super,options){
 			$super(options);
 	        this.element.html(html);
+	        $("#homeContent").css("height",$("#user-content").height());
 	        $("#homeContent").css("width",$(".wrap").width());
 		    this._render();
 		},

@@ -18,7 +18,9 @@ define(function(require) {
 
         },
         _render: function() {
-        	$("#content-operation-menu").height($("#user-content").height()-80);
+        	var height = $(window).height(); //浏览器当前窗口可视区域高度 
+        	var headHeight = $(".navbar-header").height();
+        	$("#content-operation-menu").height(height -headHeight);
         	$("#content-operation-menu").css("margin-top","-7px");
             this.renderContent();
             

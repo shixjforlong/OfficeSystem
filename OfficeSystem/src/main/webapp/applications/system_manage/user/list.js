@@ -72,7 +72,8 @@ define(function(require){
 			$("#user_list").css("width",$(".wrap").width());
 			$("#user_list_paging").css("width",$(".wrap").width());
 			
-			$("#user_list").css("height",$("#content-operation-menu").height() - $(".container-hd").height() - $(".main_hd").height());
+			var headHeight = $(".navbar-header").height();
+			$("#user_list").css("height",$(window).height() -headHeight - $(".main_hd").height());
 			
 		    var listHeight = $("#user_list").height();
 	        var barHeight = $("#user_list_bar").height()*2;

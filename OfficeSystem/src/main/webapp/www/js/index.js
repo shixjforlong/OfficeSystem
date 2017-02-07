@@ -12,6 +12,7 @@ $(function() {
 			return;
 		}
 		if(username =="admin" && password == "123456"){
+			window.sessionStorage.setItem("userName",username);
 			window.location.replace("../applications/index.html");
 		}else{
 			$("#errorMessage").text("用户名或者密码不正确");

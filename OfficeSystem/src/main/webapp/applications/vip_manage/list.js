@@ -49,7 +49,9 @@ define(function(require){
 			$("#vip_list").css("width",$(".wrap").width());
 			$("#vip_list_paging").css("width",$(".wrap").width());
 			
-			$("#vip_list").css("height",$("#content-operation-menu").height() - $(".container-hd").height() - $(".main_hd").height());
+			var headHeight = $(".navbar-header").height();
+			$("#vip_list").css("height",$(window).height() -headHeight - $(".main_hd").height());
+			
 			
 		    var listHeight = $("#vip_list").height();
 	        var barHeight = $("#vip_list_bar").height()*2;

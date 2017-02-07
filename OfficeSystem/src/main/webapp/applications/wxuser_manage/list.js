@@ -60,7 +60,8 @@ define(function(require){
 			$("#wxuser_list").css("width",$(".wrap").width());
 			$("#wxuser_list_paging").css("width",$(".wrap").width());
 			
-			$("#wxuser_list").css("height",$("#content-operation-menu").height() - $(".container-hd").height() - $(".main_hd").height());
+			var headHeight = $(".navbar-header").height();
+			$("#wxuser_list").css("height",$(window).height() -headHeight - $(".main_hd").height());
 			
 		    var listHeight = $("#wxuser_list").height();
 	        var barHeight = $("#wxuser_list_bar").height()*2;

@@ -45,8 +45,8 @@ define(function(require){
 		_render:function(){
 			$("#goodsType_list").css("width",$(".wrap").width());
 			$("#goodsType_list_paging").css("width",$(".wrap").width());
-			
-			$("#goodsType_list").css("height",$("#content-operation-menu").height() - $(".container-hd").height() - $(".main_hd").height());
+			var headHeight = $(".navbar-header").height();
+			$("#goodsType_list").css("height",$(window).height() -headHeight - $(".main_hd").height());
 			
 		    var listHeight = $("#goodsType_list").height();
 	        var barHeight = $("#goodsType_list_bar").height()*2;

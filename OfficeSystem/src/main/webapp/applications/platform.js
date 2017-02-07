@@ -24,6 +24,7 @@ define(function(require) {
 			}
  		   console.log(config);
  		   this.loadMenu(config);
+ 		   $("#userName").text(window.sessionStorage.getItem("userName"));
         },
         loadMenu:function(config){
         	 var self = this;
