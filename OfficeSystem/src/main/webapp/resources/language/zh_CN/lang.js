@@ -24,6 +24,7 @@ var lang = {
              goods_manage:"商品列表",
              vip_manage:"会员等级管理",
              wxuser_manage:"会员信息管理",
-             home_manage:"首页"
+             home_manage:"首页",
+             take_order:"接单"
 		}
 };

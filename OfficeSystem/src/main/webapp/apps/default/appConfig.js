@@ -83,8 +83,54 @@ define(function(require) {
 			}]	
 	};
 	
+	var order={
+			name : "order",
+			order :1,
+			id:"sg-order",
+			subNavs:[{
+				name:"order_manage",
+				order : 0,
+				defaultOpen : false,
+				defaultShow : true,
+				subModule:[
+				{                       
+					name : "order_taking", //接单
+					defaultShow : true,
+					order : 0,
+					operation:["r","w"],
+					url : "./order_manage/taking/orderTakeMain.js"
+				},{                       
+					name : "orders_manage", //历史订单
+					defaultShow : true,
+					order : 0,
+					operation:["r","w"],
+					url : ""
+				}]
+			}]	
+	};
+	
+	var statistics={
+			name : "statistics",
+			order :1,
+			id:"sg-statistics",
+			subNavs:[{
+				name:"statistics_manage",
+				order : 0,
+				defaultOpen : false,
+				defaultShow : true,
+				subModule:[
+				{                       
+					name : "statistics_data", //数据分析
+					defaultShow : true,
+					order : 0,
+					operation:["r","w"],
+					url : ""
+				}]
+			}]	
+	};
+	
 	var appConfig = {
-		modules : [ home,system,goods,vip]
+		modules : [ home,system,goods,vip,order,statistics]
 	}
 
 	return appConfig;
