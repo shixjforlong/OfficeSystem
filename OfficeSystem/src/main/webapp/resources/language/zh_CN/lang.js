@@ -25,6 +25,8 @@ var lang = {
              vip_manage:"会员等级管理",
              wxuser_manage:"会员信息管理",
              home_manage:"首页",
-             take_order:"接单"
+             take_order:"接单",
+             business_manage:"商家信息",
+             business_info:"商家信息设置"
 		}
 };

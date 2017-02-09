@@ -34,6 +34,20 @@ CREATE TABLE Orders (
   PRIMARY KEY (id)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
+/*商家信息表*/
+DROP TABLE IF EXISTS Business;
+CREATE TABLE Business (  
+   id  int(11) NOT NULL AUTO_INCREMENT,  
+   number  varchar(500) NOT NULL, 
+   name  varchar(500) NOT NULL,
+   phone varchar(500) NOT NULL,
+   address varchar(500) NOT NULL,
+   servicetime varchar(500) NOT NULL,
+   service varchar(500) NOT NULL,
+   activity varchar(500) NOT NULL,
+  PRIMARY KEY (id)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
 /*会员收货地址表*/
 DROP TABLE IF EXISTS WXUserAddress;
 CREATE TABLE WXUserAddress (  

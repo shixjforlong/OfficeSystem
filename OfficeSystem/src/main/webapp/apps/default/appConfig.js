@@ -29,6 +29,12 @@ define(function(require) {
 				order : 0,
 				operation:["r","w"],
 				url : "./system_manage/user/userMain.js"
+			},{
+				name : "business_manage", //商家信息
+				defaultShow : true,
+				order : 0,
+				operation:["r","w"],
+				url : "./system_manage/business/businessMain.js"
 			}]
 		}]
 	};
