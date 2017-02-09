@@ -4,20 +4,11 @@ define(function(require) {
         initialize: function(){
         },
        
-        deleteGoodsTypeById: function(id, callback, context) {
-        	$.ajax({
-                url: "/sapi/goodsType/" + id,
-                type: "DELETE",
-                success: function(data) {
-                    callback.call(context || this, data);
-                }
-            });
-        },
-        getAllGoodsType: function(searchData, limit, cursor, callback, context) {
+        getAlltorder: function(searchData, limit, cursor, callback, context) {
             var self = this;
-            var url="/sapi/goodsType/list?limit="+limit+"&cursor="+cursor;
-            if(searchData.name){
-            	url = url+"&name="+searchData.name;
+            var url="/wapi/order/list?limit="+limit+"&cursor="+cursor;
+            if(searchData.orderNo){
+            	url = url+"&orderNo="+searchData.orderNo;
             }
             $.ajax({
                 url: url,
@@ -27,30 +18,7 @@ define(function(require) {
                 }
             });
         },
-        addGoodsType:function(data,callback,context){
-        	$.ajax({
-				url:"/sapi/goodsType/add",
-				type : "post",
-				"contentType": "application/json", 
-				data:JSON.stringify(data),
-				success: function(data) {
-	                callback.call(context || self, data);
-	            },
-	            error: function(data) {
-	                callback.call(context || self, data);
-	            }
-			});
-        },
-        getGoodsTypeInfoById: function(id, callback, context) {
-            
-        	$.ajax({
-                url: "/sapi/goodsType/"+id,
-                type: "GET",
-                success: function(data) {
-                    callback.call(context || self, data);
-                }
-            });
-        },
+       
         updateGoodsType: function(id,contentData, callback, context) {
             var self = this;
             $.ajax({

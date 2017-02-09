@@ -9,45 +9,99 @@ define(function(require){
 	var Service = require("./service");
 	var columns = [ {
 		"title":"订单编号",
-		"dataIndex" : "name",
+		"dataIndex" : "orderNo",
 		"cls" : null,
 		"width" : "10%"
 	},{
 		"title":"订单状态",
-		"dataIndex" : "descript",
+		"dataIndex" : "state",
 		"cls" : null,
-		"width" : "10%"
+		"width" : "10%",
+		render: stateConvertor
 	},{
-		"title":"商品名称",
-		"dataIndex" : "descript",
+		"title":"商品信息",
+		"dataIndex" : "goodsInfo",
 		"cls" : null,
-		"width" : "20%"
+		"width" : "20%",
+		render: function(data, type, row) {
+			 var display = "";
+	    	 var array = data.split(";");
+	    	 if(array.length>0){
+	    		 display += new Template(
+	    	             "<table  border='1px' style='border-color: gainsboro;'>"
+	    			     )
+	    	             .evaluate({
+	    	                 status : ''
+	    	             });
+	    		 for(var i=0;i<array.length-1;i++){
+	    	    	 var tds = array[i].split(",");
+	    	    	 display += new Template(
+	   	    			       "<tr style='border-bottom:0px;border-top:0px;'><td width='40%'>"+tds[0]+"</td><td width='30%'>"+tds[1]+"份</td><td width='30%'>"+tds[2]+"元</td></tr>"
+	   	    			     )
+	   	    	             .evaluate({
+	   	    	                 status : ''
+	   	    	     });
+	    	     }
+	    		 display += new Template("</table>")
+ 	    	             .evaluate({
+ 	    	                 status : ''
+ 	    	     });
+	    	 }
+	    	 return display;
+		}
 	},{
 		"title":"支付金额",
-		"dataIndex" : "descript",
+		"dataIndex" : "payPrice",
 		"cls" : null,
 		"width" : "10%"
 	},{
 		"title":"收货地址",
-		"dataIndex" : "descript",
+		"dataIndex" : "receiveAddress",
 		"cls" : null,
 		"width" : "20%"
 	},{
 		"title":"收货人姓名",
-		"dataIndex" : "descript",
+		"dataIndex" : "receiveName",
 		"cls" : null,
 		"width" : "10%"
 	},{
 		"title":"收货人手机号",
-		"dataIndex" : "descript",
+		"dataIndex" : "receivePhone",
 		"cls" : null,
 		"width" : "10%"
 	},{
 		"title":"订单创建时间",
-		"dataIndex" : "descript",
+		"dataIndex" : "traCreateTime",
 		"cls" : null,
 		"width" : "10%"
 	}];
+	function stateConvertor(value, type) {//-1:订单暂未支付  0:等待商户接单  1:商户已接单  2:商品派送中  3:订单完成
+        var display = "";
+        if ("display" == type) {
+            switch (value) {
+                case "-1":
+                    display = "未支付";
+                    break;
+                case "0":
+                    display = "等待商户接单";
+                    break;
+                case "1":
+                    display = "商户已接单";
+                    break;
+                case "2":
+                    display = "商品派送中";
+                    break;
+                case "3":
+                    display = "订单完成";
+                    break;
+                default:
+                    break;
+            }
+            return display;
+        } else {
+            return value;
+        }
+    }
 	var list = Class.create(cloud.Component,{
 		initialize:function($super,options){
 			$super(options);
@@ -119,17 +173,14 @@ define(function(require){
 			this.setDataTable();
 		},
 		setDataTable : function() {
-			//this.loadTableData(30,0);
+			this.loadTableData(30,0);
 		},
 		loadTableData : function(limit,cursor) {
 			cloud.util.mask("#torder_list_table");
         	var self = this;
-        	var name = $("#name").val();
-        	if(name){
-        		name = self.stripscript(name);
-        	}
+        	var orderNo = $("#orderNo").val();
         	self.searchData={
-        			name:name
+        			orderNo:orderNo
         	};
             Service.getAlltorder(self.searchData,limit,cursor,function(data){
             	console.log(data);

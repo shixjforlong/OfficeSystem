@@ -49,7 +49,7 @@ define(function(require){
                 }
             });
             var take2Btn = new Button({
-                text: "骑手正赶往商铺",
+                text: "商品已派送",
                 container: $("#search-bar"),
                 events: {
                     click: function(){
@@ -58,21 +58,11 @@ define(function(require){
                 }
             });
             var take3Btn = new Button({
-                text: "骑手已取货",
+                text: "已完成",
                 container: $("#search-bar"),
                 events: {
                     click: function(){
                     	self.fire("updateState",3);
-                    }
-                }
-            });
-            
-            var take4Btn = new Button({
-                text: "已送达",
-                container: $("#search-bar"),
-                events: {
-                    click: function(){
-                    	self.fire("updateState",5);
                     }
                 }
             });

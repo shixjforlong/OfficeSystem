@@ -2,6 +2,38 @@
 
 CREATE DATABASE shiguo_wechat DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 
+/*订单表*/
+DROP TABLE IF EXISTS Orders;
+CREATE TABLE Orders (  
+   id  int(11) NOT NULL AUTO_INCREMENT,  
+   openId varchar(500) NOT NULL,
+   receiveName  varchar(500), 
+   receiveGender  varchar(500),
+   receivePhone varchar(500),
+   receiveAddress varchar(500), 
+   serviceTime varchar(500),
+   distributionCost varchar(500),
+   getIntegral varchar(500),
+   payState varchar(100),
+   orderNo varchar(500),
+   tradeNo varchar(500),
+   goodsInfo  varchar(500),
+   gtotalPrice int(255),
+   integral int(255),
+   empirical int(255),
+   payPrice int(255),
+   state varchar(100),
+   payTime int(255),
+   createTime int(255),
+   traCreateTime int(255),
+   refundTime int(255),
+   refundOrderNo varchar(500),
+   refundFee int(255),
+   refundStatus int(255),
+   refundTradeNo varchar(500),
+  PRIMARY KEY (id)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
 /*会员收货地址表*/
 DROP TABLE IF EXISTS WXUserAddress;
 CREATE TABLE WXUserAddress (  
