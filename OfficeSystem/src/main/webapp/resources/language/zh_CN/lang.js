@@ -26,7 +26,10 @@ var lang = {
              wxuser_manage:"会员信息管理",
              home_manage:"首页",
              take_order:"接单",
+             goods_out:"商品配送",
+             order_finish:"订单完成",
              business_manage:"商家信息",
-             business_info:"商家信息设置"
+             business_info:"商家信息设置",
+             all_order:"所有订单"
 		}
 };

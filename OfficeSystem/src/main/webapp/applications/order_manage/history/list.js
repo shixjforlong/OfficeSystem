@@ -126,7 +126,6 @@ define(function(require){
 	        this.element.html(html);
 	        this.display = 30;
 			this.pageDisplay = 30;
-			this.state = options.state;
 			this.elements = {
 				bar : {
 					id : "torder_list_bar",
@@ -199,8 +198,7 @@ define(function(require){
         	var self = this;
         	var orderNo = $("#orderNo").val();
         	self.searchData={
-        			orderNo:orderNo,
-        			state:self.state
+        			orderNo:orderNo
         	};
             Service.getAlltorder(self.searchData,limit,cursor,function(data){
             	console.log(data);
@@ -251,61 +249,9 @@ define(function(require){
 			var self = this;
 			this.noticeBar = new NoticeBar({
 				selector : "#torder_list_bar",
-				state:self.state,
 				events : {
 					  query: function(){
 						  self.loadTableData($(".paging-limit-select").val(),0);
-					  },
-					  updateState1:function(state){//1:商户已接单  
-						    var selectedResouces = self.getSelectedResources();
-	                        if (selectedResouces.length == 0) {
-	                            dialog.render({text: "请选择一个订单"});
-	                        } else if (selectedResouces.length >= 2) {
-	                            dialog.render({text: "一次只能修改一个订单"});
-	                        } else {
-	                        	 var id = selectedResouces[0].id;
-	                        	 var finalData={
-	                        			 state:state
-	                        	 };
-	                        	 Service.updateOrderById(id,finalData, function(data) {
-	                        		 console.log(data);
-	                        		 self.loadTableData($(".paging-limit-select").val(),0);
-	                        	 });
-	                        }
-					  },
-					  updateState2:function(state){//  2:商品派送中 
-						    var selectedResouces = self.getSelectedResources();
-	                        if (selectedResouces.length == 0) {
-	                            dialog.render({text: "请选择一个订单"});
-	                        } else if (selectedResouces.length >= 2) {
-	                            dialog.render({text: "一次只能修改一个订单"});
-	                        } else {
-	                        	 var id = selectedResouces[0].id;
-	                        	 var finalData={
-	                        			 state:state
-	                        	 };
-	                        	 Service.updateOrderById(id,finalData, function(data) {
-	                        		 console.log(data);
-	                        		 self.loadTableData($(".paging-limit-select").val(),0);
-	                        	 });
-	                        }
-					  },
-					  updateState3:function(state){//   3:订单完成
-						    var selectedResouces = self.getSelectedResources();
-	                        if (selectedResouces.length == 0) {
-	                            dialog.render({text: "请选择一个订单"});
-	                        } else if (selectedResouces.length >= 2) {
-	                            dialog.render({text: "一次只能修改一个订单"});
-	                        } else {
-	                        	 var id = selectedResouces[0].id;
-	                        	 var finalData={
-	                        			 state:state
-	                        	 };
-	                        	 Service.updateOrderById(id,finalData, function(data) {
-	                        		 console.log(data);
-	                        		 self.loadTableData($(".paging-limit-select").val(),0);
-	                        	 });
-	                        }
 					  }
 				}
 			});

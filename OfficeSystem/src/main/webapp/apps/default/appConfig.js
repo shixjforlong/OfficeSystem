@@ -110,7 +110,7 @@ define(function(require) {
 					defaultShow : true,
 					order : 0,
 					operation:["r","w"],
-					url : ""
+					url : "./order_manage/history/orderHistoryMain.js"
 				}]
 			}]	
 	};

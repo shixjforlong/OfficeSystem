@@ -8,6 +8,7 @@ define(function(require){
     var NoticeBar = Class.create(cloud.Component, {
         initialize: function($super, options){
             $super(options);
+            this.state = options.state;
 			this._render();
         },
         _render: function(){
@@ -35,46 +36,55 @@ define(function(require){
                     }
                 }
             });
-            
-            $("#"+queryBtn.id).addClass("readClass");
-            
           
             var take1Btn = new Button({
                 text: "接单",
                 container: $("#search-bar"),
                 events: {
                     click: function(){
-                    	self.fire("updateState",1);
+                    	self.fire("updateState1",1);
                     }
                 }
             });
+            $("#"+take1Btn.id).addClass("readClass");
+            
             var take2Btn = new Button({
-                text: "商品已派送",
+                text: "商品配送",
                 container: $("#search-bar"),
                 events: {
                     click: function(){
-                    	self.fire("updateState",2);
+                    	self.fire("updateState2",2);
                     }
                 }
             });
+            $("#"+take2Btn.id).addClass("readClass");
+            
             var take3Btn = new Button({
-                text: "已完成",
+                text: "完成",
                 container: $("#search-bar"),
                 events: {
                     click: function(){
-                    	self.fire("updateState",3);
+                    	self.fire("updateState3",3);
                     }
                 }
             });
+            $("#"+take3Btn.id).addClass("readClass");
+            
+            if(self.state == "0"){
+            	$("#"+take2Btn.id).css("display","none");
+            	$("#"+take3Btn.id).css("display","none");
+            }else if(self.state == "1"){
+            	$("#"+take1Btn.id).css("display","none");
+            	$("#"+take3Btn.id).css("display","none");
+            }else if(self.state == "2"){
+            	$("#"+take1Btn.id).css("display","none");
+            	$("#"+take2Btn.id).css("display","none");
+            }
             
             $("#search-bar a").css({
                 margin: "-3px 0px 0px 6px"
             });
-           
         }
-        
     });
-    
     return NoticeBar;
-    
 });
