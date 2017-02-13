@@ -23,7 +23,29 @@ define(function(require) {
                 url: url,
                 type: "GET",
                 success: function(data) {
-                    callback.call(context || self, data);
+                	$.ajax({
+                        url: "/sapi/vip/list?limit=100000&cursor=0",
+                        type: "GET",
+                        success: function(vip) {
+                        	if(vip.result&&vip.result.length>0){
+                        		if(data.result&&data.result.length>0){
+                        			for(var i=0;i<data.result.length;i++){
+                        				for(var j=0;j<vip.result.length;j++){
+                                			var empiricalU = vip.result[j].empiricalU;
+                                			var empiricalL = vip.result[j].empiricalL;
+                                			if(data.result[i].empirical){
+                                				if(empiricalU<data.result[i].empirical && data.result[i].empirical<empiricalL){
+                                    				data.result[i].levelName = vip.result[j].levelName;
+                                    				data.result[i].levelId = vip.result[j].id;
+                                    			}
+                                			}
+                                		}
+                            		}
+                        		}
+                        	}
+                        	callback.call(context || self, data);
+                        }
+                	});
                 }
             });
         },

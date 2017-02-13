@@ -2,6 +2,39 @@
 
 CREATE DATABASE shiguo_wechat DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 
+DROP TABLE IF EXISTS OrderStatistics;  
+CREATE TABLE OrderStatistics (  
+   id  int(11) NOT NULL AUTO_INCREMENT,  
+   price  int(255),
+   count int(255),
+   statisticTime int(255),
+   createTime int(255),
+   updateTime int(255),
+  PRIMARY KEY (id)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8; 
+
+DROP TABLE IF EXISTS OrderStatisticsM;  
+CREATE TABLE OrderStatisticsM (  
+   id  int(11) NOT NULL AUTO_INCREMENT,  
+   price  int(255),
+   count int(255),
+   statisticTime int(255),
+   createTime int(255),
+   updateTime int(255),
+  PRIMARY KEY (id)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8; 
+
+DROP TABLE IF EXISTS OrderStatisticsY;  
+CREATE TABLE OrderStatisticsY (  
+   id  int(11) NOT NULL AUTO_INCREMENT,  
+   price  int(255),
+   count int(255),
+   statisticTime int(255),
+   createTime int(255),
+   updateTime int(255),
+  PRIMARY KEY (id)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8; 
+
 /*订单表*/
 DROP TABLE IF EXISTS Orders;
 CREATE TABLE Orders (  

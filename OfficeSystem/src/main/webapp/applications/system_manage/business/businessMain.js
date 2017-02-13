@@ -4,7 +4,7 @@ define(function(require) {
     var Table = require("../../template/tableTemplate");
     var html = require("text!./businessMain.html");
     var statusMg = require("../../template/menu");
-    var area_Mg = require("./config");
+    var area_Mg = require("./list");
     var operationMenu = Class.create(cloud.Component, {
         initialize: function($super, options) {
             $super(options);

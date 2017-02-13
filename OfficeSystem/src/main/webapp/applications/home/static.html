@@ -1,30 +1,33 @@
 <div id="homeContent" style="background-color:#f7f7f7;">
+<div id="statistics_bar" style="height:35px;">
+  
+</div>
 <section class="vbox">
     <section class="scrollable padder" style="margin-top: 10px;">
        <section class="panel panel-default">
               <div class="row m-l-none m-r-none bg-light lter">
-                <div class="col-sm-6 col-md-3 padder-v b-r b-light"> 
+                <div class="col-sm-6 col-md-3 padder-v b-r b-light" style="width:50%;"> 
                   <span class="fa-stack fa-2x pull-left m-r-sm"> 
                     <i class="fa fa-circle fa-stack-2x text-info"></i>
                     <i class="fa fa-male fa-stack-1x text-white"></i> 
                   </span>
                   <a class="clear" href="#" style="text-decoration: none;outline: none;"> 
-                   <span class="h3 block m-t-xs"><strong>520</strong>&nbsp;<small class="text-muted text-uc" style="font-size: 14px;">元</small></span> 
-                   <small class="text-muted text-uc">今日收入</small>
+                   <span class="h3 block m-t-xs"><strong id="price"></strong>&nbsp;<small class="text-muted text-uc" style="font-size: 14px;">元</small></span> 
+                   <small class="text-muted text-uc">收入</small>
                   </a> 
                 </div>
-                <div class="col-sm-6 col-md-3 padder-v b-r b-light lt"> 
+                <div class="col-sm-6 col-md-3 padder-v b-r b-light lt" style="width:50%;"> 
                   <span class="fa-stack fa-2x pull-left m-r-sm"> 
                    <i class="fa fa-circle fa-stack-2x text-warning"></i> 
                    <i class="fa fa-bug fa-stack-1x text-white"></i> 
                    <span class="easypiechart pos-abt" data-percent="100" data-line-width="4" data-track-Color="#fff" data-scale-Color="false" data-size="50" data-line-cap='butt' data-animate="2000" data-target="#bugs" data-update="3000"></span> 
                    </span> 
                    <a class="clear" href="#" style="text-decoration: none;outline: none;"> 
-                    <span class="h3 block m-t-xs"><strong id="bugs">46</strong>&nbsp;<small class="text-muted text-uc" style="font-size: 14px;">笔</small></span> 
-                    <small class="text-muted text-uc">今日订单数</small>
+                    <span class="h3 block m-t-xs"><strong id="count"></strong>&nbsp;<small class="text-muted text-uc" style="font-size: 14px;">笔</small></span> 
+                    <small class="text-muted text-uc">订单数</small>
                    </a>
                 </div>
-                <div class="col-sm-6 col-md-3 padder-v b-r b-light"> 
+               <!--  <div class="col-sm-6 col-md-3 padder-v b-r b-light"> 
                    <span class="fa-stack fa-2x pull-left m-r-sm"> 
                       <i class="fa fa-circle fa-stack-2x text-danger"></i> 
                       <i class="fa fa-fire-extinguisher fa-stack-1x text-white"></i> 
@@ -44,13 +47,13 @@
                      <span class="h3 block m-t-xs"><strong>1000</strong>&nbsp;<small class="text-muted text-uc" style="font-size: 14px;">笔</small></span> 
                      <small class="text-muted text-uc">本月订单数</small> 
                    </a> 
-                </div>
+                </div> -->
               </div>
        </section>
        <div class="row">
               <div class="col-md-8" style="width: 100%;">
                 <section class="panel panel-default">
-                  <header class="panel-heading font-bold">24小时销售统计图</header>
+                  <header class="panel-heading font-bold"><span id="lineTitle"></span></header>
                   <div class="panel-body">
                     <div id="flot-1ine" style="height:210px"></div>
                   </div>

@@ -115,28 +115,9 @@ define(function(require) {
 			}]	
 	};
 	
-	var statistics={
-			name : "statistics",
-			order :1,
-			id:"sg-statistics",
-			subNavs:[{
-				name:"statistics_manage",
-				order : 0,
-				defaultOpen : false,
-				defaultShow : true,
-				subModule:[
-				{                       
-					name : "statistics_data", //数据分析
-					defaultShow : true,
-					order : 0,
-					operation:["r","w"],
-					url : ""
-				}]
-			}]	
-	};
 	
 	var appConfig = {
-		modules : [ home,system,goods,vip,order,statistics]
+		modules : [ home,system,goods,vip,order]
 	}
 
 	return appConfig;
