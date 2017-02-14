@@ -27,11 +27,11 @@ define(function(require){
             var startTime = (new Date(date + " 00:00:00")).getTime() / 1000;
             var endTime = (new Date(date + " 23:59:59")).getTime() / 1000;
 
-            this.getEveryDay(startTime, endTime, null);
+            this.getEveryDay(startTime, endTime, '');
         },
-		getEveryDay:function(startTime, endTime){
+		getEveryDay:function(startTime, endTime,number){
 			var self = this;
-			service.getOrderDay(startTime,endTime,0,10000,function(data){
+			service.getOrderDay(startTime,endTime,number,0,10000,function(data){
 				console.log(data);
 				if(data[0].priceT){
 					$("#price").text(data[0].priceT);
@@ -49,9 +49,9 @@ define(function(require){
 				$("#lineTitle").text("每小时销售统计图");
 			});
 		},
-		getEveryMonth:function(startTime, endTime){
+		getEveryMonth:function(startTime, endTime,number){
 			var self = this;
-			service.getOrderMonth(startTime,endTime,0,10000,function(data){
+			service.getOrderMonth(startTime,endTime,number,0,10000,function(data){
 				console.log(data);
 				if(data[0].priceT){
 					$("#price").text(data[0].priceT);
@@ -84,9 +84,9 @@ define(function(require){
 				$("#lineTitle").text("每日销售统计图");
 			});
 		},
-		getEveryYear:function(startTime, endTime){
+		getEveryYear:function(startTime, endTime,number){
 			var self = this;
-			service.getOrderYear(startTime,endTime,0,10000,function(data){
+			service.getOrderYear(startTime,endTime,number,0,10000,function(data){
 				console.log(data);
 				if(data[0].priceT){
 					$("#price").text(data[0].priceT);
@@ -111,15 +111,18 @@ define(function(require){
         			 query: function(){
                          self.executeSearch(function(startTime, endTime) {
                              var selectedId = $("#reportType").find("option:selected").val();
+                             var number = $("#business").find("option:selected").val();
+                             if(number == "0"){
+                            	 number="";
+                             }
                              if (selectedId == "1") {
-                                  self.getEveryDay(startTime, endTime);
+                                  self.getEveryDay(startTime, endTime,number);
                              } else if (selectedId == "2") {
-                                  self.getEveryMonth(startTime, endTime);
+                                  self.getEveryMonth(startTime, endTime,number);
                              } else if (selectedId == "3") {
-                                  self.getEveryYear(startTime, endTime);
+                                  self.getEveryYear(startTime, endTime,number);
                              }
                          });
-                     
         			 }
         		 	}
 				});

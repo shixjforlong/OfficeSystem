@@ -13,6 +13,9 @@ define(function(require) {
             if(searchData.state){
             	url = url+"&state="+searchData.state;
             }
+            if(searchData.number){
+            	url = url+"&number="+searchData.number;
+            }
             $.ajax({
                 url: url,
                 type: "GET",

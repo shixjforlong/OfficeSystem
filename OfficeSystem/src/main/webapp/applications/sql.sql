@@ -4,7 +4,8 @@ CREATE DATABASE shiguo_wechat DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci
 
 DROP TABLE IF EXISTS OrderStatistics;  
 CREATE TABLE OrderStatistics (  
-   id  int(11) NOT NULL AUTO_INCREMENT,  
+   id  int(11) NOT NULL AUTO_INCREMENT, 
+   number  varchar(500) NOT NULL, 
    price  int(255),
    count int(255),
    statisticTime int(255),
@@ -15,7 +16,8 @@ CREATE TABLE OrderStatistics (
 
 DROP TABLE IF EXISTS OrderStatisticsM;  
 CREATE TABLE OrderStatisticsM (  
-   id  int(11) NOT NULL AUTO_INCREMENT,  
+   id  int(11) NOT NULL AUTO_INCREMENT, 
+   number  varchar(500), 
    price  int(255),
    count int(255),
    statisticTime int(255),
@@ -26,7 +28,8 @@ CREATE TABLE OrderStatisticsM (
 
 DROP TABLE IF EXISTS OrderStatisticsY;  
 CREATE TABLE OrderStatisticsY (  
-   id  int(11) NOT NULL AUTO_INCREMENT,  
+   id  int(11) NOT NULL AUTO_INCREMENT,
+   number  varchar(500), 
    price  int(255),
    count int(255),
    statisticTime int(255),
@@ -40,6 +43,7 @@ DROP TABLE IF EXISTS Orders;
 CREATE TABLE Orders (  
    id  int(11) NOT NULL AUTO_INCREMENT,  
    openId varchar(500) NOT NULL,
+   number  varchar(500), 
    receiveName  varchar(500), 
    receiveGender  varchar(500),
    receivePhone varchar(500),
@@ -78,6 +82,8 @@ CREATE TABLE Business (
    servicetime varchar(500) NOT NULL,
    service varchar(500) NOT NULL,
    activity varchar(500) NOT NULL,
+   lat varchar(500) NOT NULL,
+   lng varchar(500) NOT NULL,
   PRIMARY KEY (id)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
@@ -91,6 +97,7 @@ CREATE TABLE WXUserAddress (
    receiveAddress varchar(500) NOT NULL,
    enabled varchar(500) NOT NULL,
    openId varchar(500) NOT NULL,
+   number  varchar(500), 
   PRIMARY KEY (id)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 

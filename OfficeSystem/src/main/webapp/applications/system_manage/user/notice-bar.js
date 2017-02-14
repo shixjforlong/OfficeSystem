@@ -38,35 +38,36 @@ define(function(require){
             
             $("#"+queryBtn.id).addClass("readClass");
             
-          
-            var addBtn = new Button({
-                text: "添加",
-                container: $("#search-bar"),
-                events: {
-                    click: function(){
-                    	self.fire("add");
+            var name = window.sessionStorage.getItem("userName");
+            if(name =="admin"){
+            	var addBtn = new Button({
+                    text: "添加",
+                    container: $("#search-bar"),
+                    events: {
+                        click: function(){
+                        	self.fire("add");
+                        }
                     }
-                }
-            });
-            var editBtn = new Button({
-                text: "修改",
-                container: $("#search-bar"),
-                events: {
-                    click: function(){
-                    	self.fire("modify");
+                });
+                var editBtn = new Button({
+                    text: "修改",
+                    container: $("#search-bar"),
+                    events: {
+                        click: function(){
+                        	self.fire("modify");
+                        }
                     }
-                }
-            });
-            var deleteBtn = new Button({
-                text: "删除",
-                container: $("#search-bar"),
-                events: {
-                    click: function(){
-                    	self.fire("drop");
+                });
+                var deleteBtn = new Button({
+                    text: "删除",
+                    container: $("#search-bar"),
+                    events: {
+                        click: function(){
+                        	self.fire("drop");
+                        }
                     }
-                }
-            });
-            
+                });
+            }
             $("#search-bar a").css({
                 margin: "-3px 0px 0px 6px"
             });

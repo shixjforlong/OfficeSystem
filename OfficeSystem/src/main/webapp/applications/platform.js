@@ -24,7 +24,7 @@ define(function(require) {
 			}
  		   console.log(config);
  		   this.loadMenu(config);
- 		   $("#userName").text(window.sessionStorage.getItem("userName"));
+ 		   $("#userName").text(window.sessionStorage.getItem("userName")+" "+window.sessionStorage.getItem("shopName"));
         },
         loadMenu:function(config){
         	 var self = this;

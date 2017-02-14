@@ -15,6 +15,28 @@ define(function(require) {
         },
         _render: function() {
             this.draw();
+            this.getBusinessInfo();
+        },
+        getBusinessInfo:function(){
+        	var self = this;
+        	self.searchData={
+        			name:''
+        	};
+        	var number = window.sessionStorage.getItem("number");
+            Service.getAllbusiness(self.searchData,100,0,function(data){
+            	console.log(data);
+	   		   if(data.result.length>0){
+	   			   $("#business").html("");
+            	   $("#business").append("<option value='0'>所有店铺</option>");
+	   			   for(var i=0;i<data.result.length;i++){
+	   					if(data.result[i].number == number){
+	   						$("#business").append("<option value='" +data.result[i].number + "' selected='selected'>" +data.result[i].name+"</option>");
+	   					}else{
+	   						$("#business").append("<option value='" +data.result[i].number + "'>" +data.result[i].name+"</option>");
+	   					}
+	   			   }
+	   		   }
+   			}, self);
         },
         draw: function() {
             var self = this; 
@@ -27,20 +49,14 @@ define(function(require) {
 		                    "<option value='3'>年</option>" +
 	                    "</select>&nbsp;&nbsp;" +
                     "</div>" +
-                    "<div style='float:left;height: 28px;'>" +
+                    "<div style='float:left;height: 28px;' id='date'>" +
                     	"<input style='width:120px;height: 28px;' class='notice-bar-calendar-input datepicker' type='text' readonly='readonly' id='summary_date' />&nbsp;&nbsp;" +
                     "</div>" +
-                    "<div style='float:left;height: 28px;margin-left:-10px;'>" +
-                    	"<input style='width:120px;height: 28px;display:none;' class='notice-bar-calendar-input datepicker' type='text' readonly='readonly' id='summary_month'/>&nbsp;&nbsp;" +
+                    "<div style='float:left;height: 28px;margin-left:0px;display:none;' id='month'>" +
+                    	"<input style='width:120px;height: 28px;' class='notice-bar-calendar-input datepicker' type='text' readonly='readonly' id='summary_month'/>&nbsp;&nbsp;" +
                     "</div>" +
-		            "<div style='float:left;height: 28px;'>" +
-		            	"<input style='width:120px;height: 28px;display:none;' class='notice-bar-calendar-input datepicker' type='text' readonly='readonly' id='summary_startTime' />" +
-                    "</div>&nbsp;&nbsp;" +
-                    "<div style='float:left;height: 28px;margin-left: 5px;'>" +
-	                	"<input style='width:120px;height: 28px;display:none;' class='notice-bar-calendar-input datepicker' type='text' readonly='readonly' id='summary_endTime'/>" +
-	                "</div>" +
-	                "<div style='float:left;height: 28px;margin-left:5px;margin-right: 30px;'>" +
-		                "<select id='summary_year' style='height: 28px;display:none; border-radius: 4px;'>" +
+	                "<div style='float:left;height: 28px;margin-left:0px;display:none;' id='year'>" +
+		                "<select id='summary_year' style='height: 28px; border-radius: 4px;width:120px;'>" +
 		                      "<option value='2017' selected='selected'>2017</option>" +
 		                      "<option value='2018'>2018</option>" +
 		                      "<option value='2019'>2019</option>" +
@@ -53,12 +69,25 @@ define(function(require) {
 		                      "<option value='2026'>2026</option>" +
 		                      "<option value='2027'>2027</option>" +
                               "<option value='2028'>2028</option>" +
-		                "</select>" +
+		                "</select>&nbsp;&nbsp;" +
 	                "</div>" +
+	                "<div style='float:left;'>" +
+                     "<select id='business'  name='business' style='width:150px;height: 28px;'>" +
+	                   
+                     "</select>" +
+                    "</div>" +
 	                "<div id='buttonDiv' style='float:left;height: 28px;margin-left:5px;'></div>" +
 		          "</div>");
             this.element.append($htmls);
            
+            
+            var name = window.sessionStorage.getItem("userName");
+            if(name =="admin"){
+            	$("#business").attr("disabled",false);
+            }else{
+            	$("#business").attr("disabled",true);
+            }
+            
             $("#summary_month").val("");
             $("#summary_year").val("");
             this._renderBar();
@@ -71,32 +100,26 @@ define(function(require) {
             $("#reportType").bind('change', function() {
                 var selectedId = $("#reportType").find("option:selected").val();
                 if (selectedId == "1") {
-                    $("#summary_month").css("display", "none");
-                    $("#summary_year").css("display", "none");
-                    $("#summary_date").css("display", "block");
-                    $("#summary_startTime").css("display", "none");
-                    $("#summary_endTime").css("display", "none");
-                    $("#summary_year").val("");
-                    $("#summary_month").val("");
-                    $("#summary_date").val(cloud.util.dateFormat(new Date(((new Date()).getTime()) / 1000), "yyyy/MM/dd"));
+                    $("#month").css("display", "none");
+                    $("#year").css("display", "none");
+                    $("#date").css("display", "block");
+                    $("#year").val("");
+                    $("#month").val("");
+                    $("#date").val(cloud.util.dateFormat(new Date(((new Date()).getTime()) / 1000), "yyyy/MM/dd"));
                 } else if (selectedId == "2") {
-                    $("#summary_date").css("display", "none");
-                    $("#summary_year").css("display", "none");
-                    $("#summary_month").css("display", "block");
-                    $("#summary_startTime").css("display", "none");
-                    $("#summary_endTime").css("display", "none");
-                    $("#summary_date").val("");
-                    $("#summary_year").val("");
-                    $("#summary_month").val(cloud.util.dateFormat(new Date(((new Date()).getTime()) / 1000), "yyyy/MM"));
+                    $("#date").css("display", "none");
+                    $("#year").css("display", "none");
+                    $("#month").css("display", "block");
+                    $("#date").val("");
+                    $("#year").val("");
+                    $("#month").val(cloud.util.dateFormat(new Date(((new Date()).getTime()) / 1000), "yyyy/MM"));
                      
                 } else if (selectedId == "3") {
-                    $("#summary_date").css("display", "none");
-                    $("#summary_month").css("display", "none");
-                    $("#summary_year").css("display", "block");
-                    $("#summary_startTime").css("display", "none");
-                    $("#summary_endTime").css("display", "none");
-                    $("#summary_date").val("");
-                    $("#summary_month").val("");
+                    $("#date").css("display", "none");
+                    $("#month").css("display", "none");
+                    $("#year").css("display", "block");
+                    $("#date").val("");
+                    $("#month").val("");
                 }
             });
         },

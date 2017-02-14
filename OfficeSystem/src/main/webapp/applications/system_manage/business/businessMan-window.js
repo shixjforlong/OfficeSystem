@@ -107,32 +107,45 @@ define(function(require){
 	    			return;
 	            }
           		   
-	            var finaldata = {
-	            		number:number,
-	            		name:name,
-	            		phone:phone,
-	            		address:address,
-	            		servicetime: servicetime,
-	            		service:service,
-	            		activity:activity
-	            };
-	     		if(self.number){
-	     			  Service.updateBusinessConfig(self.number,finaldata,function(data){
-                    	   if(data.error!=null){
-    	                	}else{
-    							self.window.destroy();
-    		 	             	self.fire("getbusinessList");
-    						}
-    			       });
-	     		 }else{
-	     			  Service.addBusiness(finaldata,function(data){
-	 	                	if(data.error!=null){
-	 	                	}else{
-								self.window.destroy();
-			 	             	self.fire("getbusinessList");
-							}
-	 				   });
-	     		  }
+	            $.ajax({
+                    url: "/wapi/map/baidu/getLocation?address="+address,
+                    type: "GET",
+                    success: function(datas) {
+                    	var addressObj_ = eval('(' + datas + ')');
+                    	var location_s = addressObj_.result.location;//商家店铺的经纬度
+                    	var lat = location_s.lat;
+                    	var lng = location_s.lng;
+                    	
+                    	 var finaldata = {
+         	            		number:number,
+         	            		name:name,
+         	            		phone:phone,
+         	            		address:address,
+         	            		servicetime: servicetime,
+         	            		service:service,
+         	            		activity:activity,
+         	            		lat:lat,
+         	            		lng:lng
+         	            };
+                      if(self.number){
+       	     			  Service.updateBusinessConfig(self.number,finaldata,function(data){
+                           	   if(data.error!=null){
+           	                	}else{
+           							self.window.destroy();
+           		 	             	self.fire("getbusinessList");
+           						}
+           			       });
+       	     		  }else{
+       	     			  Service.addBusiness(finaldata,function(data){
+       	 	                	if(data.error!=null){
+       	 	                	}else{
+       								self.window.destroy();
+       			 	             	self.fire("getbusinessList");
+       							}
+       	 				   });
+       	     		  }
+                    }
+        		});
 	        });
 		},
 		_renderGetData:function(){

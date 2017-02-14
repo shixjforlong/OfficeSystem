@@ -198,9 +198,14 @@ define(function(require){
 			cloud.util.mask("#torder_list_table");
         	var self = this;
         	var orderNo = $("#orderNo").val();
+        	var number = window.sessionStorage.getItem("number");
+        	if(number =="0"){
+        		number="";
+        	}
         	self.searchData={
         			orderNo:orderNo,
-        			state:self.state
+        			state:self.state,
+        			number:number
         	};
             Service.getAlltorder(self.searchData,limit,cursor,function(data){
             	console.log(data);

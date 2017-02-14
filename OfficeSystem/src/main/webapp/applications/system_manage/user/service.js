@@ -3,7 +3,20 @@ define(function(require) {
     var Service = Class.create({
         initialize: function(){
         },
-       
+        getAllbusiness: function(searchData, limit, cursor, callback, context) {
+            var self = this;
+            var url="/sapi/business/list?limit="+limit+"&cursor="+cursor;
+            if(searchData.name){
+            	url = url+"&name="+searchData.name;
+            }
+            $.ajax({
+                url: url,
+                type: "GET",
+                success: function(data) {
+                    callback.call(context || self, data);
+                }
+            });
+        },     
         deleteUserById: function(id, callback, context) {
         	$.ajax({
                 url: "http://localhost/sapi/user/" + id,
