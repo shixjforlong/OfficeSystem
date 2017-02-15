@@ -16,6 +16,9 @@ define(function(require) {
             if(searchData.number){
             	url = url+"&number="+searchData.number;
             }
+            if(searchData.reminderState){
+            	url = url+"&reminderState="+searchData.reminderState;
+            }
             $.ajax({
                 url: url,
                 type: "GET",

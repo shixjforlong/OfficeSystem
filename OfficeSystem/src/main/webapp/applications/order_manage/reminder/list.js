@@ -12,7 +12,7 @@ define(function(require){
 		"title":"订单编号",
 		"dataIndex" : "orderNo",
 		"cls" : null,
-		"width" : "10%"
+		"width" : "12%"
 	},{
 		"title":"订单状态",
 		"dataIndex" : "state",
@@ -54,7 +54,7 @@ define(function(require){
 		"title":"金额",
 		"dataIndex" : "payPrice",
 		"cls" : null,
-		"width" : "5%"
+		"width" : "8%"
 	},{
 		"title":"收货地址",
 		"dataIndex" : "receiveAddress",
@@ -72,19 +72,8 @@ define(function(require){
 		"width" : "10%"
 	}
 	,{
-		"title":"接单时间",
-		"dataIndex" : "orderInTime",
-		"cls" : null,
-		"width" : "10%",
-		render:function(data, type, row){
-			if(data){
-				return cloud.util.dateFormat(new Date(data), "yyyy-MM-dd hh:mm:ss");
-			}
-			
-		}
-	},{
-		"title":"配送时间",
-		"dataIndex" : "orderOutTime",
+		"title":"催单时间",
+		"dataIndex" : "reminderTime",
 		"cls" : null,
 		"width" : "10%",
 		render:function(data, type, row){
@@ -94,7 +83,7 @@ define(function(require){
 			
 		}
 	}];
-	function stateConvertor(value, type) {//-1:订单暂未支付  0:等待商户接单  1:商户已接单  2:商品派送中  3:订单完成 4:订单取消
+	function stateConvertor(value, type) {//-1:订单暂未支付  0:等待商户接单  1:商户已接单  2:商品派送中  3:订单完成
         var display = "";
         if ("display" == type) {
             switch (value) {
@@ -102,19 +91,46 @@ define(function(require){
                     display = "未支付";
                     break;
                 case "0":
-                    display = "等待接单";
+                	display += new Template(
+      	    	             "<span style='color:red;'>等待接单</span>"
+      	    			     )
+      	    	             .evaluate({
+      	    	                 status : ''
+      	    	             });
                     break;
                 case "1":
-                    display = "已接单";
+                	display += new Template(
+     	    	             "<span style='color:green;'>已接单</span><br>"+
+     	    	             "<span style='color:red;'>等待配送</span>"
+     	    			     )
+     	    	             .evaluate({
+     	    	                 status : ''
+     	    	             });
                     break;
                 case "2":
-                    display = "配送中";
+                	display += new Template(
+    	    	             "<span style='color:green;'>已配送</span><br>"+
+    	    	             "<span style='color:red;'>等待收货</span>"
+    	    			     )
+    	    	             .evaluate({
+    	    	                 status : ''
+    	    	             });
                     break;
                 case "3":
-                    display = "已完成";
+                	display += new Template(
+   	    	             "<span style='color:green;'>订单完成</span>"
+   	    			     )
+   	    	             .evaluate({
+   	    	                 status : ''
+   	    	             });
                     break;
                 case "4":
-                    display = "订单取消";
+                	display += new Template(
+   	    	             "<span style='color:red;'>订单取消</span>"
+   	    			     )
+   	    	             .evaluate({
+   	    	                 status : ''
+   	    	             });
                     break;
                 default:
                     break;
@@ -205,14 +221,10 @@ define(function(require){
         	if(number =="0"){
         		number="";
         	}
-        	var state  = $("#state").find("option:selected").val();
-        	if(state == -2){
-        		state="";
-        	}
         	self.searchData={
         			orderNo:orderNo,
-        			number:number,
-        			state:state
+        			reminderState:"1",
+        			number:number
         	};
             Service.getAlltorder(self.searchData,limit,cursor,function(data){
             	console.log(data);
@@ -263,27 +275,46 @@ define(function(require){
 			var self = this;
 			this.noticeBar = new NoticeBar({
 				selector : "#torder_list_bar",
+				state:self.state,
 				events : {
-					    query: function(){
+					  query: function(){
 						  self.loadTableData($(".paging-limit-select").val(),0);
-					    },
-						see: function(){
+					  },
+					  see: function(){
 						    var selectedResouces = self.getSelectedResources();
-			                if (selectedResouces.length == 0) {
-			                    dialog.render({text: "请选择一个订单"});
-			                } else if (selectedResouces.length >= 2) {
-			                    dialog.render({text: "一次只能查看一个订单"});
-			                } else {
-			                    var id = selectedResouces[0].id;
-			                    if (this.seeOrder) {
-			                        this.seeOrder.destroy();
-			                    }
-			                    this.seeOrder = new SeeOrderDetail({
-			                        selector: "body",
-			                        orderId: id
-			                    });
-			                }
-					    }
+	                        if (selectedResouces.length == 0) {
+	                            dialog.render({text: "请选择一个订单"});
+	                        } else if (selectedResouces.length >= 2) {
+	                            dialog.render({text: "一次只能查看一个订单"});
+	                        } else {
+	                            var id = selectedResouces[0].id;
+	                            if (this.seeOrder) {
+	                                this.seeOrder.destroy();
+	                            }
+	                            this.seeOrder = new SeeOrderDetail({
+	                                selector: "body",
+	                                orderId: id
+	                            });
+	                        }
+					  },
+					  updateState1:function(state){  
+						    var selectedResouces = self.getSelectedResources();
+	                        if (selectedResouces.length == 0) {
+	                            dialog.render({text: "请选择一个订单"});
+	                        } else if (selectedResouces.length >= 2) {
+	                            dialog.render({text: "一次只能修改一个订单"});
+	                        } else {
+	                        	 var id = selectedResouces[0].id;
+	                        	 var finalData={
+	                        			 reminderState:"2"
+	                        	 };
+	                        	 Service.updateOrderById(id,finalData, function(data) {
+	                        		 console.log(data);
+	                        		 self.loadTableData($(".paging-limit-select").val(),0);
+	                        	 });
+	                        }
+					  }
+					 
 				}
 			});
 		},

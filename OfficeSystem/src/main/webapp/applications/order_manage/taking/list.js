@@ -7,11 +7,12 @@ define(function(require){
 	var Button = require("cloud/components/button");
 	var Paging = require("cloud/components/paging");
 	var Service = require("./service");
+	var SeeOrderDetail = require("./seeOrderDetail-window");
 	var columns = [ {
 		"title":"订单编号",
 		"dataIndex" : "orderNo",
 		"cls" : null,
-		"width" : "10%"
+		"width" : "12%"
 	},{
 		"title":"订单状态",
 		"dataIndex" : "state",
@@ -53,7 +54,7 @@ define(function(require){
 		"title":"金额",
 		"dataIndex" : "payPrice",
 		"cls" : null,
-		"width" : "5%"
+		"width" : "8%"
 	},{
 		"title":"收货地址",
 		"dataIndex" : "receiveAddress",
@@ -93,7 +94,7 @@ define(function(require){
 			
 		}
 	}];
-	function stateConvertor(value, type) {//-1:订单暂未支付  0:等待商户接单  1:商户已接单  2:商品派送中  3:订单完成
+	function stateConvertor(value, type) {//-1:订单暂未支付  0:等待商户接单  1:商户已接单  2:商品派送中  3:订单完成 4:订单取消
         var display = "";
         if ("display" == type) {
             switch (value) {
@@ -101,16 +102,46 @@ define(function(require){
                     display = "未支付";
                     break;
                 case "0":
-                    display = "等待商户接单";
+                	display += new Template(
+      	    	             "<span style='color:red;'>等待接单</span>"
+      	    			     )
+      	    	             .evaluate({
+      	    	                 status : ''
+      	    	             });
                     break;
                 case "1":
-                    display = "商户已接单";
+                	display += new Template(
+     	    	             "<span style='color:green;'>已接单</span><br>"+
+     	    	             "<span style='color:red;'>等待配送</span>"
+     	    			     )
+     	    	             .evaluate({
+     	    	                 status : ''
+     	    	             });
                     break;
                 case "2":
-                    display = "商品配送中";
+                	display += new Template(
+    	    	             "<span style='color:green;'>已配送</span><br>"+
+    	    	             "<span style='color:red;'>等待收货</span>"
+    	    			     )
+    	    	             .evaluate({
+    	    	                 status : ''
+    	    	             });
                     break;
                 case "3":
-                    display = "订单完成";
+                	display += new Template(
+   	    	             "<span style='color:green;'>订单完成</span>"
+   	    			     )
+   	    	             .evaluate({
+   	    	                 status : ''
+   	    	             });
+                    break;
+                case "4":
+                	display += new Template(
+   	    	             "<span style='color:red;'>订单取消</span>"
+   	    			     )
+   	    	             .evaluate({
+   	    	                 status : ''
+   	    	             });
                     break;
                 default:
                     break;
@@ -260,6 +291,23 @@ define(function(require){
 				events : {
 					  query: function(){
 						  self.loadTableData($(".paging-limit-select").val(),0);
+					  },
+					  see: function(){
+						    var selectedResouces = self.getSelectedResources();
+	                        if (selectedResouces.length == 0) {
+	                            dialog.render({text: "请选择一个订单"});
+	                        } else if (selectedResouces.length >= 2) {
+	                            dialog.render({text: "一次只能查看一个订单"});
+	                        } else {
+	                            var id = selectedResouces[0].id;
+	                            if (this.seeOrder) {
+	                                this.seeOrder.destroy();
+	                            }
+	                            this.seeOrder = new SeeOrderDetail({
+	                                selector: "body",
+	                                orderId: id
+	                            });
+	                        }
 					  },
 					  updateState1:function(state){//1:商户已接单  
 						    var selectedResouces = self.getSelectedResources();

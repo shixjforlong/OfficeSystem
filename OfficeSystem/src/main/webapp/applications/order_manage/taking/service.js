@@ -39,7 +39,17 @@ define(function(require) {
                     callback.call(context || self, data);
                 }
             });
-        }
+        },
+        getOrderInfoById: function(id, callback, context) {
+            
+        	$.ajax({
+                url: "/wapi/order/"+ id,
+                type: "GET",
+                success: function(data) {
+                    callback.call(context || self, data);
+                }
+            });
+        },
     });
 
     return new Service();

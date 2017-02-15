@@ -106,6 +106,30 @@ define(function(require) {
 					operation:["r","w"],
 					url : "./order_manage/taking/orderTakeMain.js"
 				},{                       
+					name : "order_out", //商品配送
+					defaultShow : true,
+					order : 0,
+					operation:["r","w"],
+					url : "./order_manage/out/orderOutMain.js"
+				},{                       
+					name : "order_finishs", //订单完成
+					defaultShow : true,
+					order : 0,
+					operation:["r","w"],
+					url : "./order_manage/finish/orderFinishMain.js"
+				},{                       
+					name : "order_reminder", //催单
+					defaultShow : true,
+					order : 0,
+					operation:["r","w"],
+					url : "./order_manage/reminder/orderReminderMain.js"
+				},{                       
+					name : "order_cancel", //订单取消
+					defaultShow : true,
+					order : 0,
+					operation:["r","w"],
+					url : "./order_manage/cancel/orderCancelMain.js"
+				},{                       
 					name : "orders_manage", //历史订单
 					defaultShow : true,
 					order : 0,

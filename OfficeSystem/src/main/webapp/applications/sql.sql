@@ -68,6 +68,13 @@ CREATE TABLE Orders (
    refundFee int(255),
    refundStatus int(255),
    refundTradeNo varchar(500),
+   orderInTime int(255),
+   orderOutTime int(255),
+   orderFinishTime int(255),
+   orderCancelTime int(255),
+   reminderState varchar(500),
+   reminderTime int(255),
+   reminderReplyTime int(255),
   PRIMARY KEY (id)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 

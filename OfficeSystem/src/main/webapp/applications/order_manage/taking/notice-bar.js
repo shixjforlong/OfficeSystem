@@ -36,6 +36,16 @@ define(function(require){
                     }
                 }
             });
+            
+            var seeBtn = new Button({
+                text: "查看详情",
+                container: $("#search-bar"),
+                events: {
+                    click: function(){
+                        self.fire("see");
+                    }
+                }
+            });
           
             var take1Btn = new Button({
                 text: "接单",
@@ -79,6 +89,10 @@ define(function(require){
             }else if(self.state == "2"){
             	$("#"+take1Btn.id).css("display","none");
             	$("#"+take2Btn.id).css("display","none");
+            }else if(self.state == "4"){
+            	$("#"+take1Btn.id).css("display","none");
+            	$("#"+take2Btn.id).css("display","none");
+            	$("#"+take3Btn.id).css("display","none");
             }
             
             $("#search-bar a").css({

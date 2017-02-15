@@ -30,6 +30,8 @@ var lang = {
              order_finish:"订单完成",
              business_manage:"商家信息",
              business_info:"商家信息设置",
-             all_order:"所有订单"
+             all_order:"所有订单",
+             reminder_order:"催单",
+             order_cancels:"订单取消"
 		}
 };

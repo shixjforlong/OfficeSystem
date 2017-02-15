@@ -1,0 +1,174 @@
+<style>
+    #deviceForm {border:1px solid #CFD8CE;font-size:12px;height:580px;margin: 5px auto;width:850px;overflow:hidden;position:relative;-moz-border-radius:5px;-webkit-border-radius:5px;}
+    #deviceForm .items{width:100%; clear:both; position:absolute;}
+    #deviceForm .right{float:right;}
+    #deviceForm #status{height:35px;background:#28b5d6;}
+    #status li{float:left;color:#fff;padding:6.5px 70px;font-size: 14px;}
+    #status li.active{background-color:#09c;font-weight:normal;}
+    .input{width:16px; height:16px; margin:8px auto; line-height:16px; border:1px solid #d3d3d3; padding:2px;}
+    .label{height: 24px;line-height: 16px;display: inline-block;vertical-align: middle;}
+    .page{width:100%;float:left;}
+    .page h3
+    {
+      font-size: 14px;
+      border-bottom: 1px dotted #ccc;
+      margin-bottom: 20px;
+      padding: 5px;
+      text-align: left;
+    }
+    .selfTable{
+       background: black;
+       margin: 3px;
+       color: white;
+       width: 20px;
+       height: 20px;
+       text-align: center;
+       border-radius: 4px;
+       font-size: 10px;
+       line-height: 20px;
+       cursor: pointer;
+    }
+      .selfTable_grey{
+          background: #C3B8B8;
+          margin: 3px;
+          color: white;
+          width: 15px;
+          height: 15px;
+          text-align: center;
+          font-size: 10px;
+          line-height: 15px;
+    }
+      .selfTable_red{
+          background: #BD2F34;
+          margin: 3px;
+          color: white;
+          width: 15px;
+          height: 15px;
+          text-align: center;
+          border-radius: 10px;
+          font-size: 14px;
+          line-height: 15px;
+          cursor: pointer;
+    }
+    .selfTableOther{
+       background: #5694D9;
+       margin: 3px;
+       color: white;
+       width: 40px;
+       height: 15px;
+       text-align: center;
+       font-size: 10px;
+       line-height: 15px;
+       cursor: pointer;
+    }
+    .page h3 em{font-size:12px; font-weight:500; font-style:normal}
+    .page p{line-height:24px;}
+    .page p label{font-size:14px; display:block;}
+    .btn_nav{height:36px; line-height:36px; margin-right: 4.6%;margin-top: 3%;text-align: right;}
+    .prev,.next{width:100px; height:32px; line-height:32px;  border:1px solid #d3d3d3; cursor:pointer}
+    .page h1{ border-bottom:1px dotted #ccc;margin-top: 55%; }
+    .configtable {border: 1px solid rgba(115, 120, 126, 0.32);text-align: center;height:40px;}
+    .trClass{
+       border: 1px solid #e7e7eb;
+    }
+    .TDClass{
+       text-align: center;height: 30px;width:150px;
+       border: 1px solid #e7e7eb;
+    }
+    tr{
+      height: 30px;
+    }
+</style>
+
+<div id="deviceForm">
+    <ul id="status">
+        <li class="active" id="tab1"><span>订单详情</span></li>
+    </ul>
+    <div class="items">
+        <div class="page" id="baseInfo">
+            <div style="float:left;width: 100%;height:580px;overflow:auto;margin-top: 10px;">
+                 <table width="98%" style="margin:0px 15px 15px 15px;">
+                    <tr>
+                        <td width="15%"><label><span>订单号</span></label></td>
+                        <td><span id="orderNos"></span></td>
+                    </tr>
+                    <tr>
+                        <td width="15%"><label><span>交易号</span></label></td>
+                        <td><span id="tradeNo"></span></td>
+                    </tr>
+                    <tr>
+                        <td width="15%"><label><span>订单状态</span></label></td>
+                        <td><span id="states"></span></td>
+                    </tr>
+                    <tr>
+                        <td width="15%"><label><span>商品信息</span></label></td>
+                        <td>
+                          <table id="goodsInfo" border="1px" style='border-color: gainsboro;width:50%;'></table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="15%"><label><span>商品总金额</span></label></td>
+                        <td><span id="gtotalPrice"></span></td>
+                    </tr>
+                    <tr>
+                        <td width="15%"><label><span>积分扣除</span></label></td>
+                        <td><span id="integral"></span></td>
+                    </tr>
+                     <tr>
+                        <td width="15%"><label><span>配送费</span></label></td>
+                        <td><span id="distributionCosts"></span></td>
+                    </tr>
+                    <tr>
+                        <td width="15%"><label><span>支付金额</span></label></td>
+                        <td><span id="payPrice"></span></td>
+                    </tr>
+                    <tr>
+                        <td width="15%"><label><span>获得积分</span></label></td>
+                        <td><span id="getIntegral"></span></td>
+                    </tr>
+                     <tr>
+                        <td width="15%"><label><span>获得经验值</span></label></td>
+                        <td><span id="empirical"></span></td>
+                    </tr>
+                    <tr>
+                        <td width="15%"><label><span>收货人名称</span></label></td>
+                        <td><span id="receiveName"></span></td>
+                    </tr>
+                    <tr>
+                        <td width="15%"><label><span>收货人性别</span></label></td>
+                        <td><span id="receiveGender"></span></td>
+                    </tr>
+                    <tr>
+                        <td width="15%"><label><span>收货人手机号</span></label></td>
+                        <td><span id="receivePhone"></span></td>
+                    </tr>
+                    <tr>
+                        <td width="15%"><label><span>收货人地址</span></label></td>
+                        <td><span id="receiveAddress"></span></td>
+                    </tr>
+                     <tr>
+                        <td width="15%"><label><span>支付时间</span></label></td>
+                        <td><span id="payTime"></span></td>
+                    </tr>
+                     <tr>
+                        <td width="15%"><label><span>接单时间</span></label></td>
+                        <td><span id="orderInTime"></span></td>
+                    </tr>
+                    <tr>
+                        <td width="15%"><label><span>配送时间</span></label></td>
+                        <td><span id="orderOutTime"></span></td>
+                    </tr>
+                    <tr>
+                        <td width="15%"><label><span>完成时间</span></label></td>
+                        <td><span id="orderFinishTime"></span></td>
+                    </tr>
+                    <tr>
+                        <td width="15%"><label><span>退款状态</span></label></td>
+                        <td><span id="refundStatus"></span></td>
+                    </tr>
+                    
+                 </table>
+            </div>
+        </div>
+     </div>
+</div>

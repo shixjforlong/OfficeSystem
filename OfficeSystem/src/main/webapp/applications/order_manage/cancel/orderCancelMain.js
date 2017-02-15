@@ -4,7 +4,7 @@ define(function(require) {
     var Table = require("../../template/tableTemplate");
     var html = require("text!./orderTakeMain.html");
     var statusMg = require("../../template/menu");
-    var area_Mg = require("./list");
+    var area_Mg = require("../taking/list");
     var operationMenu = Class.create(cloud.Component, {
         initialize: function($super, options) {
             $super(options);
@@ -26,7 +26,7 @@ define(function(require) {
             
         },
         renderContent: function() {
-          var areaMan_Array = ["take_order"];
+          var areaMan_Array = ["order_cancels"];
           if (this.statusMg) {
              this.statusMg.destroy();
           }
@@ -37,35 +37,19 @@ define(function(require) {
                    click: function(id) {
                         $(".main_bd").empty();
                         $("#user-content").scrollTop(0);
-                        if (id == "take_order") {//接单
+                        if (id == "order_cancels") {
                              if (this.area_listPage) {
                                 this.area_listPage.destroy();
                              }
                              this.area_listPage = new area_Mg({
                                 "container": ".main_bd",
-                                state:"0"
+                                state:"4"
                              });
-                         }else if (id == "goods_out") {//商品配送
-                             if (this.order_listPage) {
-                                 this.order_listPage.destroy();
-                              }
-                              this.order_listPage = new area_Mg({
-                                 "container": ".main_bd",
-                                 state:"1"
-                              });
-                          }else if (id == "order_finish") {//订单完成
-                              if (this.finish_listPage) {
-                                  this.finish_listPage.destroy();
-                               }
-                               this.finish_listPage = new area_Mg({
-                                  "container": ".main_bd",
-                                  state:"2"
-                               });
-                           }
+                         }
                     }
                }
             });
-            $("#take_order").click();
+            $("#order_cancels").click();
         }
     });
     return operationMenu;

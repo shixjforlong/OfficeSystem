@@ -24,7 +24,17 @@ define(function(require) {
 			}
  		   console.log(config);
  		   this.loadMenu(config);
+ 		   //this.getState();
  		   $("#userName").text(window.sessionStorage.getItem("userName")+" "+window.sessionStorage.getItem("shopName"));
+        },
+        getState:function(){
+        	 var url="/wapi/order/list?limit=100&cursor=0&state=0";
+        	 var eventSource =  new EventSource(url);
+        	 eventSource.onmessage = function(event) {
+             	if(event && event.data){
+             		console.log(event.data);
+             	}
+        	 };
         },
         loadMenu:function(config){
         	 var self = this;

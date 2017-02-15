@@ -4,7 +4,7 @@ define(function(require) {
     var Table = require("../../template/tableTemplate");
     var html = require("text!./orderTakeMain.html");
     var statusMg = require("../../template/menu");
-    var area_Mg = require("./list");
+    var area_Mg = require("../taking/list");
     var operationMenu = Class.create(cloud.Component, {
         initialize: function($super, options) {
             $super(options);
@@ -26,7 +26,7 @@ define(function(require) {
             
         },
         renderContent: function() {
-          var areaMan_Array = ["take_order"];
+          var areaMan_Array = ["goods_out"];
           if (this.statusMg) {
              this.statusMg.destroy();
           }
@@ -65,7 +65,7 @@ define(function(require) {
                     }
                }
             });
-            $("#take_order").click();
+            $("#goods_out").click();
         }
     });
     return operationMenu;
