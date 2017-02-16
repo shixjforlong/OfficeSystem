@@ -24,17 +24,69 @@ define(function(require) {
 			}
  		   console.log(config);
  		   this.loadMenu(config);
- 		   //this.getState();
+ 		   this.getState();
  		   $("#userName").text(window.sessionStorage.getItem("userName")+" "+window.sessionStorage.getItem("shopName"));
         },
         getState:function(){
-        	 var url="/wapi/order/list?limit=100&cursor=0&state=0";
-        	 var eventSource =  new EventSource(url);
-        	 eventSource.onmessage = function(event) {
+        	var number = window.sessionStorage.getItem("number");
+        	if(number =="0"){
+        		number="";
+        	}
+        	//接单提醒
+        	var url="/wapi/orderState?state=0";
+        	if(number){
+        		url=url+"&number="+number;
+        	}
+        	var eventSource =  new EventSource(url);
+        	eventSource.onmessage = function(event) {
              	if(event && event.data){
-             		console.log(event.data);
+             		var audio = document.getElementById("new");
+             		if(event.data>0){
+             			$("#getOrder").text(event.data);
+             			audio.play();//播放
+             		}else{
+             			audio.pause();//暂停
+             			$("#getOrder").text("");
+             		}
              	}
         	 };
+        	 //催单提醒
+        	var url_re="/wapi/orderState?reminderState=1";
+         	if(number){
+         		url_re=url_re+"&number="+number;
+         	}
+         	var eventSource_re =  new EventSource(url_re);
+         	eventSource_re.onmessage = function(event) {
+              	if(event && event.data){
+              		var audio = document.getElementById("cuidan");
+              		if(event.data>0){
+              			$("#remindOrder").text(event.data);
+              			audio.play();//播放
+              		}else{
+              			audio.pause();//暂停
+              			$("#remindOrder").text("");
+              		}
+              	}
+         	 };
+         	 
+         	 //取消订单
+         	var url_cancel="/wapi/orderState?cancelState=1&payState=3";//支付成功后取消的
+         	if(number){
+         		url_cancel=url_cancel+"&number="+number;
+         	}
+         	var eventSource_cancel =  new EventSource(url_cancel);
+         	eventSource_cancel.onmessage = function(event) {
+              	if(event && event.data){
+              		var audio = document.getElementById("cancel");
+              		if(event.data>0){
+              			$("#cancelOrder").text(event.data);
+              			audio.play();//播放
+              		}else{
+              			audio.pause();//暂停
+              			$("#cancelOrder").text("");
+              		}
+              	}
+         	 };
         },
         loadMenu:function(config){
         	 var self = this;

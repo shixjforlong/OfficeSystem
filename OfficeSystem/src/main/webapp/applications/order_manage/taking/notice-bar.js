@@ -9,6 +9,7 @@ define(function(require){
         initialize: function($super, options){
             $super(options);
             this.state = options.state;
+            this.cancelState = options.cancelState;
 			this._render();
         },
         _render: function(){
@@ -80,6 +81,7 @@ define(function(require){
             });
             $("#"+take3Btn.id).addClass("readClass");
             
+            
             if(self.state == "0"){
             	$("#"+take2Btn.id).css("display","none");
             	$("#"+take3Btn.id).css("display","none");
@@ -95,6 +97,7 @@ define(function(require){
             	$("#"+take3Btn.id).css("display","none");
             }
             
+           
             $("#search-bar a").css({
                 margin: "-3px 0px 0px 6px"
             });

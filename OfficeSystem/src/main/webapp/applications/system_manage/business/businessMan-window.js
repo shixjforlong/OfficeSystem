@@ -158,6 +158,8 @@ define(function(require){
 		     		 $("#servicetime").val(data.result[0].servicetime==null?"":data.result[0].servicetime);
 		     		 $("#service").val(data.result[0].service==null?"":data.result[0].service);
 		     		 $("#activity").val(data.result[0].activity==null?"":data.result[0].activity);
+		     		 
+		     		 $("#number").attr("disabled",true);
 				});
 			}
 		},

@@ -6,7 +6,7 @@ define(function(require){
 	var Table = require("cloud/components/table");
 	var Button = require("cloud/components/button");
 	var Paging = require("cloud/components/paging");
-	//var Addwxuser = require("./wxuserMan-window");
+	var Addwxuser = require("./wxuserMan-window");
 	var Service = require("./service");
 	var columns = [ {
 		"title":"昵称",
@@ -222,7 +222,7 @@ define(function(require){
 	                        	if (this.modifyPro) {
 	                                this.modifyPro.destroy();
 	                            }
-	                            /*this.modifyPro = new Addwxuser({
+	                            this.modifyPro = new Addwxuser({
 	                                selector: "body",
 	                                id: _id,
 	                                events: {
@@ -230,7 +230,7 @@ define(function(require){
 	                                    	self.loadTableData($(".paging-limit-select").val(),0);
 	                                    }
 	                                }
-	                            });*/
+	                            });
 	                        }
 					  }
 				}

@@ -38,7 +38,7 @@ define(function(require){
             
             $("#"+queryBtn.id).addClass("readClass");
           
-            /*var editBtn = new Button({
+            var editBtn = new Button({
                 text: "修改",
                 container: $("#search-bar"),
                 events: {
@@ -46,7 +46,7 @@ define(function(require){
                     	self.fire("modify");
                     }
                 }
-            });*/
+            });
             
             
             $("#search-bar a").css({

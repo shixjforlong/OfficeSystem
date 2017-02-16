@@ -75,6 +75,8 @@ CREATE TABLE Orders (
    reminderState varchar(500),
    reminderTime int(255),
    reminderReplyTime int(255),
+   cancelState varchar(500),
+   cancelStateTime int(255),
   PRIMARY KEY (id)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 

@@ -4,7 +4,7 @@ define(function(require) {
     var Table = require("../../template/tableTemplate");
     var html = require("text!./orderTakeMain.html");
     var statusMg = require("../../template/menu");
-    var area_Mg = require("../taking/list");
+    var area_Mg = require("./list");
     var operationMenu = Class.create(cloud.Component, {
         initialize: function($super, options) {
             $super(options);
@@ -43,7 +43,8 @@ define(function(require) {
                              }
                              this.area_listPage = new area_Mg({
                                 "container": ".main_bd",
-                                state:"4"
+                                state:"4",
+                                cancelState:"1"
                              });
                          }
                     }

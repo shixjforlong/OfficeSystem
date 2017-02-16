@@ -158,6 +158,7 @@ define(function(require){
 	        this.display = 30;
 			this.pageDisplay = 30;
 			this.state = options.state;
+			this.cancelState = options.cancelState;
 			this.elements = {
 				bar : {
 					id : "torder_list_bar",
@@ -236,7 +237,8 @@ define(function(require){
         	self.searchData={
         			orderNo:orderNo,
         			state:self.state,
-        			number:number
+        			number:number,
+        			cancelState:self.cancelState
         	};
             Service.getAlltorder(self.searchData,limit,cursor,function(data){
             	console.log(data);
@@ -288,6 +290,7 @@ define(function(require){
 			this.noticeBar = new NoticeBar({
 				selector : "#torder_list_bar",
 				state:self.state,
+				cancelState:self.cancelState,
 				events : {
 					  query: function(){
 						  self.loadTableData($(".paging-limit-select").val(),0);

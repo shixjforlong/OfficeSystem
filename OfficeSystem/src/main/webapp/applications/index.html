@@ -33,6 +33,17 @@
               </a>
             </li>
          </ul>
+         <div style="display:none;">
+           <audio id="new">
+             <source src="images/mp3/new.mp3" type="audio/mp3">
+           </audio>
+            <audio id="cancel">
+             <source src="images/mp3/cancel.mp3" type="audio/mp3">
+           </audio>
+            <audio id="cuidan">
+             <source src="images/mp3/cuidan.mp3" type="audio/mp3">
+           </audio>
+         </div>
       </header>
       <section>
         <section class="hbox stretch"> 
@@ -82,11 +93,11 @@
                              <span>订单管理</span> 
                             </a>
 		                    <ul id="order" class="nav lt">
-		                      <li class="loadApp" id="order_taking"> <a href="#" > <i class="fa fa-angle-right"></i> <span>接单</span> </a> </li>
+		                      <li class="loadApp" id="order_taking"> <a href="#" > <i class="fa fa-angle-right"></i> <span>接单</span><span id="getOrder" style="margin-left: 5px;color: #e8970f;font-size: 14px;"></span></a> </li>
 		                      <li class="loadApp" id="order_out"> <a href="#" > <i class="fa fa-angle-right"></i> <span>商品配送</span> </a> </li>
 		                      <li class="loadApp" id="order_finishs"> <a href="#" > <i class="fa fa-angle-right"></i> <span>订单完成</span> </a> </li>
-		                      <li class="loadApp" id="order_reminder"> <a href="#" > <i class="fa fa-angle-right"></i> <span>催单</span> </a> </li>
-		                      <li class="loadApp" id="order_cancel"> <a href="#" > <i class="fa fa-angle-right"></i> <span>订单取消</span> </a> </li>
+		                      <li class="loadApp" id="order_reminder"> <a href="#" > <i class="fa fa-angle-right"></i> <span>催单</span> <span id="remindOrder" style="margin-left: 5px;color: #e8970f;font-size: 14px;"></span></a> </li>
+		                      <li class="loadApp" id="order_cancel"> <a href="#" > <i class="fa fa-angle-right"></i> <span>订单取消</span> <span id="cancelOrder" style="margin-left: 5px;color: #e8970f;font-size: 14px;"></span></a> </li>
 		                      <li class="loadApp" id="orders_manage"> <a href="#" > <i class="fa fa-angle-right"></i> <span>所有订单</span> </a> </li>
 		                    </ul>
                            </li> 
